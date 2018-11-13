@@ -1,0 +1,156 @@
+body {
+
+}
+
+.htmlPageBodyWrapper {
+    /*width: 100%;*/
+    min-height: 100vh;
+    background-color: #c4e3f3;
+}
+
+/******** PAGE TOP **********/
+.htmlPageBodyTopWrapper {
+    /*width: 100%;*/
+    /*height: 17.5%;*/
+    background-color: orange;
+}
+
+#htmlPageBannerWrapper {
+    /*width: 100%;*/
+    /*height: 80%;*/
+    background-color: blueviolet;
+}
+#htmlPageNavigationBarWrapper {
+    /*width: 90%;*/
+    /*height: 100%;*/
+    /*margin-left: 5%;*/
+}
+
+#htmlPageCategoryLinkWrapper {
+
+}
+
+/******* PAGE BOTTOM ********/
+.htmlPageBodyBottomWrapper {
+    /*width: 100%;*/
+    min-height: 82.5%;
+    background-color: green;
+}
+
+#htmlPageContentWrapperOuter {
+    /*width: 90%;*/
+    /*height: 100%;*/
+    /*margin-left: 5%;*/
+    background-color: yellow;
+}
+
+#htmlPageContentWrapperInner {
+    /*width: 90%;*/
+    /*height: 100%;*/
+    /*margin-left: 5%;*/
+    background-color: blue;
+
+    min-height: 30em;
+}
+
+
+#htmlPageHeaderWrapper {
+    margin-top:0.6vw;
+    background-color: pink;
+}
+#htmlPageHeaderWrapper h2 {
+    margin:0;
+}
+
+#htmlPageContent {
+    margin-top:1.5vw;
+    min-height: 10em;
+    background-color: brown;
+}
+/*************************************************************/
+#it-solution-selection-services-link {
+    background-color: red;
+    min-height: 4em;
+}
+#business-change-management-services-link {
+    background-color: orange;
+    min-height: 4em;
+}
+#it-transformation-services-link {
+    background-color: yellow;
+    min-height: 4em;
+}
+#technical-delivery-services-link {
+    background-color: green;
+    min-height: 4em;
+}
+#support-services-link {
+    background-color: blue;
+    min-height: 4em;
+}
+
+/*************************************************************/
+.navTab {
+    color:#FFFFFF;
+    background-color: #727272;
+    padding-top:0.2vw;
+    padding-bottom:0.2vw;
+}
+.navTab h3 {
+    padding:0;
+    margin:0;
+}
+
+.navTab a {
+    color:#FFFFFF;
+    text-decoration: none;
+}
+
+footer {
+    text-align: center;
+    background-color: white;
+}
+/******************************************************/
+.body_diagram {
+    min-height: 4em;
+    background-color:mediumpurple;
+}
+
+/********************* RESPONSIVE BEHAVIOUR **********/
+.main_text {
+    font-weight: bold;
+}
+
+.main_text, .body_text {
+    font-size: 2.4rem;
+}
+
+.service_buttons {
+    text-align: center;
+}
+
+.link_button {
+    font-size: 2rem;
+}
+
+.serviceLink {
+    padding: 0;
+}
+
+.servicesIcon {
+    margin:0!important;
+    padding: 0!important;
+
+    width:80%;
+    object-fit: contain;
+}
+/**************************************************/
+
+@media only screen and (max-width: 600px) {
+
+    .main_text, .body_text, .link_button{
+        font-size: 1.6rem;
+    }
+
+}
+/**************************************************/

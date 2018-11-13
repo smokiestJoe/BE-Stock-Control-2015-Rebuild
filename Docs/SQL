@@ -1,0 +1,7 @@
+SQL:
+
+Naming conventions
+- If the data is a name or label, the content will be displayed in real English.
+- If the data is a table name, then they will be lowercase with NO white space between words.
+
+- Company and Category are parent tables and will be top level search filters.

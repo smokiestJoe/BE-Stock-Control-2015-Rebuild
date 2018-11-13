@@ -1,0 +1,13 @@
+The purpose of this program is to modernise the legacy program that was Big Earls stock control.
+As well as generating a correct and normalised set of data for product display, the system will allow
+for the modification of product descriptions.
+It will:
+
+1: Be able to remove ALL tagging from the system - This was placed in the DB originally due to ignorance and
+the quickest possible way to stylaise the Zen Cart adverts that were used at the time.
+
+2: Identify a product and correctly assign it to a table with the appropriate relationship with the specification tables
+
+3: FTP to suppliers to retrieve newest prices.
+
+4: Calculate daily prices and margins.
