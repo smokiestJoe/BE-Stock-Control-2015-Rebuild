@@ -21,4 +21,8 @@ class Product_Component_Memory extends Product_Abstract
     public $memoryOcSpeed;
 
     public $memoryPin;
+
+    public $memoryProfile;
+
+    public $memoryEAN;
 }

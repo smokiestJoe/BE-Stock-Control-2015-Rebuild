@@ -1,0 +1,13 @@
+The initial program was built adhoc, on a need by need basis. As a result, there was little to no modularisation,
+very little reusable code, and extremely convoluted product databases.
+
+This new program serves as a duel purpose, as the new stock control system (Modeling purposes only) and as a set of
+utilities to detangle and clutter the previous data structure.
+
+13.11.2018 - Product table for memory complete:
+    Data has been detangled. A series of functions have been created to deal with the standardisation of
+    product category and manufacturer throughout the detangling process.
+
+    - PROTOTYPE MODELLING:
+    - Data structure for product->memory provisionally completed.
+    - Parent tables category and company complete, foreign keys assigned.

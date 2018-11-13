@@ -5,3 +5,11 @@ Naming conventions
 - If the data is a table name, then they will be lowercase with NO white space between words.
 
 - Company and Category are parent tables and will be top level search filters.
+
+1: the folder /public/sql/legacy/create : shows how the data was stored in 2015 for rapid injection into ZenCart.
+
+2: the folder /private/utilityFunctions/detangle : shows the functions used to detangle the data.
+
+3: the folder /public/sql/new/search : shows the parent tables which will be used for rapid indexing and client search.
+
+4: the folder /public/sql/new/product/xxxxxxx : shows the new table structure for the old data.

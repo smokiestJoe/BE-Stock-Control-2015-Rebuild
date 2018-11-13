@@ -5,9 +5,6 @@ CREATE TABLE company (
   UNIQUE KEY (`manufacturer`)
 );
 
-
-
-
 INSERT INTO `company`(`manufacturer`) VALUES
 ('EVGA'),
 ('Lenovo'),
@@ -36,6 +33,9 @@ INSERT INTO `company`(`manufacturer`) VALUES
 ('AOC'),
 ('PNY'),
 ('Accuratus'),
+('Hewlett Packard'),
+('Advent'),
+('Packard Bell'),
 ('Linx'),
 ('Toshiba'),
 ('OCZ'),

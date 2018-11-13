@@ -20,4 +20,5 @@ require_once  __DIR__ . "/contentHeader.php";
 // Model Classes
 require_once  __DIR__ . "/ProductModelsHeader.php";
 
-
+// Utility Detangle
+require_once  __DIR__ . "/utilityHeader.php";

@@ -16,7 +16,7 @@ class Product_Abstract
 
     protected $productName;
 
-    protected $productImageFolderLink;
+    protected $productImageFolder;
 
     protected $productDescription;
 
@@ -25,4 +25,8 @@ class Product_Abstract
     protected $productSubCategory;
 
     protected $productNestedCategory;
+
+    protected $productColor;
+
+    protected $productEAN;
 }
