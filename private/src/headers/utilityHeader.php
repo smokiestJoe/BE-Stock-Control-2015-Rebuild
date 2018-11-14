@@ -6,8 +6,12 @@
  * Time: 10:47
  */
 
-require_once __DIR__ . "/../../utilityFunctions/toLowercase.php";
-require_once __DIR__ . "/../../utilityFunctions/standardiseCompany.php";
+
+require_once __DIR__ . "/../../utilityFunctions/StandardiseCompany.php";
 require_once __DIR__ . "/../../utilityFunctions/ImageReassigner.php";
 
-require_once __DIR__ . "/../../utilityFunctions/detangle/memoryDetangle.php";
+
+// DETANGLERS:
+require_once __DIR__ . "/../../utilityFunctions/detangle/Detangler.php";
+
+require_once __DIR__ . "/../../utilityFunctions/detangle/components/memoryDetangler.php";

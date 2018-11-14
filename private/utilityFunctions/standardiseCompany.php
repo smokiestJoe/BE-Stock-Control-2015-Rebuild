@@ -6,11 +6,11 @@
  * Time: 13:42
  */
 
-function standardiseCompany($company) {
+class StandardiseCompany
+{
+    private $company = "";
 
-    $company = strtolower($company);
-
-    $companies = [
+    private $companies = [
         'evga' => 'EVGA',
         'corsair' => 'Corsair',
         'lenovo' => 'Lenovo',
@@ -50,10 +50,18 @@ function standardiseCompany($company) {
         'belkin' => 'Belkin',
     ];
 
-    if (array_key_exists($company, $companies)) {
-
-        $company = $companies[$company];
+    public function __construct($company)
+    {
+        $this->company = $company;
     }
 
-    return $company;
+    public function getStandardisedCompany()
+    {
+        if (array_key_exists($this->company, $this->companies)) {
+
+            $this->company = $this->companies[$this->company];
+        }
+
+        return $this->company;
+    }
 }

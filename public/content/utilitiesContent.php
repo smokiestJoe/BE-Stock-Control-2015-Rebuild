@@ -10,16 +10,12 @@ function utilitiesContent()
 {
     $pdoConnection = PdoSingleton::Instance();
 
-    if ($pdoConnection) {
-
-        echo "Connected<br>";
+    if (! $pdoConnection) {
+        echo "There was an error connecting - Process halted.<br>";
     }
 
-    // DETANGLE BY type:
-
-
     // Memory
-    detangleComponentMemory($pdoConnection);
+    new Detangler($pdoConnection, 'Memory');
 
 
 }

@@ -2,7 +2,10 @@ The initial program was built adhoc, on a need by need basis. As a result, there
 very little reusable code, and extremely convoluted product databases.
 
 This new program serves as a duel purpose, as the new stock control system (Modeling purposes only) and as a set of
-utilities to detangle and clutter the previous data structure.
+utilities to detangle and remove clutter from the previous data structure. The overall goal is to have a fully normalised
+set of data before implementing the models and the mappers to prevent coding inefficiencies.
+
+PRE MODELS AND MAPPERS:
 
 13.11.2018 - Product table for memory complete:
     Data has been detangled. A series of functions have been created to deal with the standardisation of
@@ -11,3 +14,20 @@ utilities to detangle and clutter the previous data structure.
     - PROTOTYPE MODELLING:
     - Data structure for product->memory provisionally completed.
     - Parent tables category and company complete, foreign keys assigned.
+
+14.11.2018 - Image folder automation and copying complete
+    As each product is detangled, there was the ever growing problem of the stock images not marrying up. They were
+    clumped together in the initial instance by manufacturer. As this is not conduucive with going forward, a class
+    has been created called "ImageReassigner". This in essence builds a new directory structure and renames the image
+    as appropriate
+
+    OLD: stockImages/manufacturer/PREFIX-FILENAME.xxx
+
+    NEW: images/stock/manufcaturer/category/modelNumber/FILENAME
+
+    In addition to the above, the function "memoryDetangle" has been separated off into a generic Dentangler Class,
+    where common detangle functions are managed. The product specific detangling is then handed off to specific classes.
+
+
+
+
