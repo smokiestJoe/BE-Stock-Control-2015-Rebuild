@@ -68,7 +68,6 @@ class ImageReassigner
      */
     private $modelNumber = "";
 
-
     /**
      * ImageReassigner constructor.
      * @param $company
@@ -88,7 +87,6 @@ class ImageReassigner
 
         $this->modelNumber = $modelNumber;
 
-
         $this->verifyOldDirectoryPath();
     }
 
@@ -98,8 +96,6 @@ class ImageReassigner
     private function verifyOldDirectoryPath()
     {
         if (is_dir($this->baseLocation)) {
-
-            echo "Old Image Directory Found. Continuing<br>";
 
             $this->verifyOldFileExists();
 
@@ -118,15 +114,13 @@ class ImageReassigner
 
         if (file_exists($this->oldFilePath)) {
 
-            echo "The file $this->oldFilePath exists<br>";
-
             $this->setOldFileName($this->oldFilePath);
 
             $this->checkForNewCompanyFolder();
 
         } else {
 
-            echo "The file $this->oldFilePath does not exist<br>";
+            echo "The file $this->oldFilePath does not exist. Aborting.<br>";
         }
     }
 
@@ -176,8 +170,6 @@ class ImageReassigner
             mkdir($this->newPath);
         }
 
-        echo $this->dbFilePath ."<br>";
-
         $this->copyImageFile();
     }
 
@@ -191,24 +183,14 @@ class ImageReassigner
 
         $fileExtension = $fileExtension[1];
 
-        echo "THE FILE EXTENSION IS: " . $fileExtension . "<br>";
-
         $old = $this->oldFilePath;
 
-        echo "THE OLD FILE PATH IS: " . $old . "<br>";
-
         $new = $this->baseLocation . $this->dbFilePath . $this->modelNumber . '-01.' . $fileExtension;
-
-        echo "THE NEW FILE PATH IS: " . $new . "<br>";
-
 
         if (!copy($old, $new)) {
 
             echo "failed to copy $old <br>";
 
-        } else {
-
-            echo "copy was a success<br>";
         }
     }
 
@@ -218,8 +200,6 @@ class ImageReassigner
     private function setOldFileName($oldFile)
     {
         $paths = $list = explode("/", $oldFile);
-
-        echo "OLD FILE:" . $paths[8] . "<br>";
 
         $this->oldFile = $paths[8];
     }

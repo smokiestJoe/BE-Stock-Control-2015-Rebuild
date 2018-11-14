@@ -9,5 +9,5 @@
 // Models:
 require_once __DIR__  . "/../../models/Product_Abstract.php";
 
-// Components:
-require_once __DIR__ . "/../../models/Components/Product_Component_Memory.php";
+// components:
+require_once __DIR__ . "/../../models/components/Product_Component_Memory.php";

@@ -14,16 +14,12 @@ function utilitiesContent()
         echo "There was an error connecting - Process halted.<br>";
     }
 
-    // Memory
-    new Detangler($pdoConnection, 'Memory');
+    /* Note the category passed in should match the spelling in the table "stocked_products" */
 
+    // Memory
+    #new Detangler($pdoConnection, 'Memory');
+
+    // Case Fan
+    new Detangler($pdoConnection, 'Case Fan');
 
 }
-
-/*
- *
- * $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ? AND status=?');
-$stmt->execute([$email, $status]);
-$user = $stmt->fetch();
- *
- */

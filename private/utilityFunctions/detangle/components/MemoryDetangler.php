@@ -84,27 +84,3 @@ class MemoryDetangler
         print_r($arr)."<br><br>";
     }
 }
-
-////    model_number varchar(255) NOT NULL, - N
-////    company varchar(255) NOT NULL,      - N
-////    image_folder varchar(255) NOT NULL,  -NC
-////    description varchar(255) NOT NULL,   -Nd
-////    category varchar(255) NOT NULL,      -N
-////    EAN varchar(255),                    -Nd
-////    color varchar(20),
-///     name varchar(255) NOT NULL,
-////    --
-////    mem_size varchar(10) NOT NULL,
-////    mem_denominator varchar(20) NOT NULL,
-////    mem_type varchar(20) NOT NULL,
-////    mem_connection varchar(20) NOT NULL,
-////    mem_speed varchar(20) NOT NULL,
-////    mem_oc_speed varchar(20),
-////    mem_pin varchar(20) NOT NULL,
-////    mem_profile boolean NOT NULL,
-////    --
-////    PRIMARY KEY (ID),
-////    FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
-////    FOREIGN KEY (`category`) REFERENCES components(`component`),
-////    UNIQUE KEY (`model_number`)
-////);

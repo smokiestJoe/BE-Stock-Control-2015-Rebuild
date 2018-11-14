@@ -28,6 +28,11 @@ PRE MODELS AND MAPPERS:
     In addition to the above, the function "memoryDetangle" has been separated off into a generic Dentangler Class,
     where common detangle functions are managed. The product specific detangling is then handed off to specific classes.
 
+    Though it took the morning, the detangling process has been simplified and the ability to detangle products has been
+    exponentially increased. All common detangle methods are handled by the class "Detangler", the specific product
+    detangling is then dealt with by a series of specific classes. The imageReassigner is called in the detangler to
+    handle the complete detangling with one call to the class Detangler and the product passed in.
+
 
 
 

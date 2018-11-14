@@ -33,6 +33,7 @@ class Detangler
      */
     private $detanglers = [
         'memory' => 'MemoryDetangler',
+        'case_fan' => 'CaseFanDetangler',
     ];
 
     /**
@@ -73,8 +74,9 @@ class Detangler
             // 1: Make Company & Category lowercase.
             $companyLowercase = strtolower($row['manufacturer']);
             $category = strtolower($row['type']);
-            $this->category = str_replace(' ', '_', $category);
-            
+            $category = str_replace(' ', '_', $category);
+            $this->category = $category;
+
             // 2: Standardise Company
             $nonStandardisedCompany = new StandardiseCompany($companyLowercase);
             $company = $nonStandardisedCompany->getStandardisedCompany();

@@ -1,7 +1,4 @@
-
--- FOR PRODUCTS
-
-CREATE TABLE `XXXXX` (
+CREATE TABLE `case_fan` (
     ID int NOT NULL AUTO_INCREMENT,
     model_number varchar(255) NOT NULL,
     company varchar(255) NOT NULL,
@@ -11,8 +8,16 @@ CREATE TABLE `XXXXX` (
     category varchar(255) NOT NULL,
     color varchar(20),
     EAN varchar(255),
+    --
+    fan_size varchar(10) NOT NULL,
+    high_pressure boolean,
+    low_noise boolean,
+    LED boolean,
+    speed varchar(10) NOT NULL,
+    pack_size varchar(10) NOT NULL,
+    --
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
-    FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`category`) REFERENCES components(`component`),
     UNIQUE KEY (`model_number`)
 );
