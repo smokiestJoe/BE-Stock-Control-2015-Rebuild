@@ -53,6 +53,7 @@ CREATE TABLE `motherboard` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );
 
@@ -69,6 +70,7 @@ CREATE TABLE `processor` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );
 
@@ -87,6 +89,7 @@ CREATE TABLE `internal_hard_disk` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );
 
@@ -103,6 +106,7 @@ CREATE TABLE `internal_solid_disk` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );
 
@@ -119,6 +123,7 @@ CREATE TABLE `power_supply` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );
 
@@ -135,6 +140,7 @@ CREATE TABLE `pc_case` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );
 
@@ -151,22 +157,7 @@ CREATE TABLE `heatsink` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
-    UNIQUE KEY (`model_number`)
-);
-
-CREATE TABLE `graphics_card` (
-    ID int NOT NULL AUTO_INCREMENT,
-    model_number varchar(255) NOT NULL,
-    company varchar(255) NOT NULL,
-    name varchar(255) NOT NULL,
-    image_folder varchar(255) NOT NULL,
-    description varchar(255) NOT NULL,
-    category varchar(255) NOT NULL,
-    color varchar(20),
-    EAN varchar(255),
-    PRIMARY KEY (ID),
-    FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
-    FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );
 
@@ -183,5 +174,6 @@ CREATE TABLE `sound_card` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );

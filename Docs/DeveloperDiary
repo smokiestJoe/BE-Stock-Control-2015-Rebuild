@@ -17,7 +17,7 @@ PRE MODELS AND MAPPERS:
 
 14.11.2018 - Image folder automation and copying complete
     As each product is detangled, there was the ever growing problem of the stock images not marrying up. They were
-    clumped together in the initial instance by manufacturer. As this is not conduucive with going forward, a class
+    clumped together in the initial instance by manufacturer. As this is not conducive with going forward, a class
     has been created called "ImageReassigner". This in essence builds a new directory structure and renames the image
     as appropriate
 
@@ -25,13 +25,41 @@ PRE MODELS AND MAPPERS:
 
     NEW: images/stock/manufcaturer/category/modelNumber/FILENAME
 
-    In addition to the above, the function "memoryDetangle" has been separated off into a generic Dentangler Class,
+    In addition to the above, the function "memoryDetangler" has been separated off into a generic Dentangler Class,
     where common detangle functions are managed. The product specific detangling is then handed off to specific classes.
 
     Though it took the morning, the detangling process has been simplified and the ability to detangle products has been
     exponentially increased. All common detangle methods are handled by the class "Detangler", the specific product
     detangling is then dealt with by a series of specific classes. The imageReassigner is called in the detangler to
     handle the complete detangling with one call to the class Detangler and the product passed in.
+
+15.11.2018
+    Rebuild of the primary stocked_skus table. As the system will be cross compatible with several supplier systems,
+    the idea is to minimise any updating/process time during the daily stock reconciliation. Where as before, the
+    stocked_skus table was exactly that, no it contains fields referencing "for_sale" and "in_stock". What is the point
+    in working out the margins if it is not in stock? What is the point in updating the product if it's not for sale?
+    The latter also allows a quick refernece for removal of OLD stock from the DB should it be required.
+    - Detangling of Graphics card:
+        Major rebuild of the graphics card table. Now includes all the aspects that were not available in 2015 due to
+        lack of time and compatability. When modeling is implimented, the missing specifications will be able to be
+        added with relative ease. At present, RAW (outdated and incomplete) data is only available.
+
+16.11.2018
+    Though the detanglers work, now that 4 products have been implemented, there are concerns over the tidiness of the
+    classes, and their consistency. For this reason, I have introduced the "DentanglerProductAbstract", which has
+    allowed for forced uniformity during the detangling process, as well as duplicated variable declaration.
+        - CaseFanDetangler, MemoryDetangler, GraphicsCardDetangler have all been standardised
+        and are templated from the abstract DetanglerProductAbstract.
+
+    Three products completed and detangled. Further refinements to the detangler classes made, repetive code has now
+    been abolished.
+
+    In preperation for modelling, mapping, and repository interaction, the third and final stock table has been built
+    Legacy file (public->sql->legacy->stock _control) has been upated to: (public->sql->search->stock_control).
+
+    To reduce unnecessary and one time use coding, the SQL changes to the latter file allow for quick reconciliation
+    and reindexing of the stock, specifically the relationship between stocked_skus and stocked_products, which is a
+    1-2-1 relationship.
 
 
 

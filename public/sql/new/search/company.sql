@@ -42,4 +42,5 @@ INSERT INTO `company`(`manufacturer`) VALUES
 ('Western Digital'),
 ('Intel'),
 ('AMD'),
+('Nvidia'),
 ('Belkin');

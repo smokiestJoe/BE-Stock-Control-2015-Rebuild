@@ -21,7 +21,7 @@ class PdoSingleton
     /**
      * @var string
      */
-    private $password = 'xxxxxxx';
+    private $password = 'starbug1';
 
     /**
      * @var

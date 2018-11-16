@@ -34,6 +34,8 @@ class Detangler
     private $detanglers = [
         'memory' => 'MemoryDetangler',
         'case_fan' => 'CaseFanDetangler',
+        'graphics_card' => 'GraphicsCardDetangler',
+        'motherboard' => 'MotherboardDetangler',
     ];
 
     /**

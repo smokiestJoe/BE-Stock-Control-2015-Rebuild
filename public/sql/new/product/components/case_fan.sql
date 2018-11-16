@@ -19,5 +19,6 @@ CREATE TABLE `case_fan` (
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES components(`component`),
+    FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );

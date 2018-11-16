@@ -4,10 +4,17 @@ for the modification of product descriptions.
 It will:
 
 1: Be able to remove ALL tagging from the system - This was placed in the DB originally due to ignorance and
-the quickest possible way to stylaise the Zen Cart adverts that were used at the time.
+the quickest possible way to stylise the Zen Cart adverts that were used at the time.
 
 2: Identify a product and correctly assign it to a table with the appropriate relationship with the specification tables
+    -  Normalise the AWFUL data structure that was...
+    SEE: (public->sql->legacy->create.sql)
 
-3: FTP to suppliers to retrieve newest prices.
+    A working progress of this can be viewed in:
+    (public->sql->new)
 
-4: Calculate daily prices and margins.
+3: Pull an object from the DB and manipulate using a repository.
+
+4: FTP to suppliers to retrieve newest prices.
+
+5: Calculate daily prices and margins.

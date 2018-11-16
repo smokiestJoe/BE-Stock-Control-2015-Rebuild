@@ -23,8 +23,9 @@ class HtmlPageLocalScriptBuilder extends HtmlPageAbstract
 
     private function checkParentFlag()
     {
+        /* ALERT! Do not forget to turn the flag on in the Abstract Page Array! */
         if (parent::$htmlPageLocalJavascript) {
-//            echo "FLAG ON";
+
             $this->buildHtmlScriptTags();
 
             $this->resetParentFlag();

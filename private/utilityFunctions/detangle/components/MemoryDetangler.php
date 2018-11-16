@@ -6,17 +6,60 @@
  * Time: 10:47
  */
 
-
-class MemoryDetangler
+class MemoryDetangler extends DetanglerProductAbstract
 {
-    private $nonRefinedModelName = "";
+    /**
+     * @var
+     */
+    private $color;
 
-    private $modelNumber = "";
+    /**
+     * @var
+     */
+    private $size;
 
-    private $pdo = "";
+    /**
+     * @var
+     */
+    private $denominator;
 
-    private $category = "";
+    /**
+     * @var
+     */
+    private $type;
 
+    /**
+     * @var
+     */
+    private $connection;
+
+    /**
+     * @var
+     */
+    private $speed;
+
+    /**
+     * @var
+     */
+    private $ocSpeed;
+
+    /**
+     * @var
+     */
+    private $pin;
+
+    /**
+     * @var
+     */
+    private $lowProfile;
+
+    /**
+     * MemoryDetangler constructor.
+     * @param $nonRefinedModelName
+     * @param $modelNumber
+     * @param $pdo
+     * @param $category
+     */
     public function __construct($nonRefinedModelName, $modelNumber, $pdo, $category)
     {
         $this->nonRefinedModelName = $nonRefinedModelName;
@@ -30,52 +73,81 @@ class MemoryDetangler
         $this->detangleProduct();
     }
 
-    private function detangleProduct()
+    /**
+     * @return mixed|void
+     */
+    protected function detangleProduct()
     {
-        $cut2 = strpos($this->nonRefinedModelName , '(');
+        $this->setupProductDetangler();
 
-        // EXTRACT THE PRODUCT NAME
-        $prefix  = substr($this->nonRefinedModelName, 0, $cut2);
+        $this->getName();
+
+        $this->getSpecs();
+
+        $this->updateTable();
+    }
+
+    /**
+     * @return mixed|void
+     */
+    protected function getName()
+    {
+        $cut = strpos($this->nonRefinedModelName , '(');
+        $prefix  = substr($this->nonRefinedModelName, 0, $cut);
         $productName  = preg_replace('!\d+!', '', $prefix);
-        $productName = trim(preg_replace('/GB/', '', $productName));
+        $this->productName = trim(preg_replace('/GB/', '', $productName));
+    }
 
-        // REFINE STRING 2
-        $suffix = substr($this->nonRefinedModelName, $cut2);
-        $cut3 = strpos($suffix, ')');
-        $suffix2 = trim(substr($suffix, $cut3 + 2));
+    /**
+     * @return mixed|void
+     */
+    protected function getSpecs()
+    {
+        // denominator
+        $cut = strpos($this->prefix, '(');
+        $cut2 = strpos($this->prefix , ')');
+        $length = $cut2 - $cut - 3;
 
-        // EXTRACT THE DENOMINATOR
-        $denominator = substr($suffix, 1, $cut3 - 1);
+        $list = explode("-", $this->suffix);
 
-        // EXTRACT THE REST
-        $list = explode("-", $suffix2);
+        // memory Specs:
+        $this->denominator = substr($this->prefix, $cut + 1, $length);
+        $this->size = $list[0];
+        $this->type = $list[2];
+        $this->connection = $list[1];
+        $this->speed = $list[3];
+        $this->pin = $list[4];
+        $this->ocSpeed = "undefined";
 
-        $size = $list[1];
-        $type = $list[3];
-        $connection = $list[2];
-        $speed = $list[4];
-        $pin = $list[5];
-        $ocSpeed = "undefined";
+        if (isset($list[5])) {
 
-        if (isset($list[6])) {
-            $color = $list[6];
+            $this->color = $list[5];
+
         } else {
-            $color = "";
+
+            $this->color = "";
         }
 
-        $lp = $list[0];
+        if (strpos($this->prefix, 'Low Profile') !== false) {
 
-        if (strpos($lp, 'Low Profile') !== false) {
-            $bit = 1;
+            $this->lowProfile = 1;
+
         } else {
-            $bit = 0;
-        }
 
+            $this->lowProfile = 0;
+        }
+    }
+
+    /**
+     * @return mixed|void
+     */
+    protected function updateTable()
+    {
         $sql = "UPDATE $this->category SET name=?, color=?, mem_size=?, mem_denominator=?, mem_type=?, mem_connection=?, mem_speed=?, mem_oc_speed=?, mem_pin=?, mem_profile=? WHERE model_number=?";
 
         $sqlStatement = $this->pdo->pdoConnection->prepare($sql);
 
-        $sqlStatement->execute([$productName, $color, $size, $denominator, $type, $connection, $speed, $ocSpeed, $pin, $bit, $this->modelNumber]);
+        $sqlStatement->execute([$this->productName, $this->color, $this->size, $this->denominator, $this->type, $this->connection, $this->speed, $this->ocSpeed, $this->pin, $this->lowProfile, $this->modelNumber]);
 
         echo "PDOStatement::errorInfo():<br>";
 
@@ -83,4 +155,5 @@ class MemoryDetangler
 
         print_r($arr)."<br><br>";
     }
+
 }

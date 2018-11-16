@@ -71,15 +71,15 @@ abstract class HtmlPageAbstract
             'crossorigin' => 'anonymous',
         ],
         'namespace' => [
-            'call' => ['services'],
+            'call' => ['utilities'],
             'src' => '/etg/public/www/javascript/applicationNamespace.js',
         ],
         'servicesFunctions' => [
-            'call' => ['services'],
+            'call' => ['utilities'],
             'src' => '/etg/public/www/javascript/services/servicesFunctions.js',
         ],
         'services' => [
-            'call' => ['services'],
+            'call' => ['utilities'],
             'src' => '/etg/public/www/javascript/services/services.js',
         ],
     ];

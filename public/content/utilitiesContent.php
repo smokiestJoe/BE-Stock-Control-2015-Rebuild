@@ -20,6 +20,12 @@ function utilitiesContent()
     #new Detangler($pdoConnection, 'Memory');
 
     // Case Fan
-    new Detangler($pdoConnection, 'Case Fan');
+    #new Detangler($pdoConnection, 'Case Fan');
+
+    // Graphics Card
+    #new Detangler($pdoConnection, 'Graphics Card');
+
+    // Motherboard
+    // -- new Detangler($pdoConnection, 'Motherboard');
 
 }
