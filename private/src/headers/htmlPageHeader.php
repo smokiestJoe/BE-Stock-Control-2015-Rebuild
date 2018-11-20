@@ -6,7 +6,7 @@
  * Time: 09:08
  */
 
-// HTML Build Classes
+// HTML Build ChildClasses
 require_once __DIR__ . "/../../html/htmlPageBuildClasses/HtmlPageAbstract.php";
 
 require_once __DIR__ . "/../../html/htmlPageBuildClasses/HtmlPageValidator.php";

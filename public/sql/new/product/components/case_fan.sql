@@ -5,9 +5,8 @@ CREATE TABLE `case_fan` (
     name varchar(255) NOT NULL,
     image_folder varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
-    category varchar(255) NOT NULL,
+    category_type varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     --
     fan_size varchar(10) NOT NULL,
     high_pressure boolean,
@@ -18,7 +17,7 @@ CREATE TABLE `case_fan` (
     --
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
-    FOREIGN KEY (`category`) REFERENCES components(`component`),
+    FOREIGN KEY (`category_type`) REFERENCES components(`category_type`),
     FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );

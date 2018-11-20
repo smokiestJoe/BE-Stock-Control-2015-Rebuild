@@ -5,9 +5,8 @@ CREATE TABLE `graphics_card` (
     name varchar(255) NOT NULL,
     image_folder varchar(255) NOT NULL,
     description varchar(255) NOT NULL,
-    category varchar(255) NOT NULL,
+    category_type varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     --
     memory_size varchar(10) NOT NULL,
     memory_type varchar(10) NOT NULL,
@@ -27,7 +26,7 @@ CREATE TABLE `graphics_card` (
     --
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
-    FOREIGN KEY (`category`) REFERENCES components(`component`),
+    FOREIGN KEY (`category_type`) REFERENCES components(`category_type`),
     FOREIGN KEY (`model_number`) REFERENCES stocked_skus(`model_number`),
     UNIQUE KEY (`model_number`)
 );

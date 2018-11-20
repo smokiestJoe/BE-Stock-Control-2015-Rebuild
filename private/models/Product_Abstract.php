@@ -29,4 +29,13 @@ class Product_Abstract
     protected $productColor;
 
     protected $productEAN;
+
+    /*********************/
+
+    protected $warranty;
+
+    protected $weight;
+
+    protected $buyPrice;
+
 }

@@ -38,10 +38,10 @@ PRE MODELS AND MAPPERS:
     the idea is to minimise any updating/process time during the daily stock reconciliation. Where as before, the
     stocked_skus table was exactly that, no it contains fields referencing "for_sale" and "in_stock". What is the point
     in working out the margins if it is not in stock? What is the point in updating the product if it's not for sale?
-    The latter also allows a quick refernece for removal of OLD stock from the DB should it be required.
+    The latter also allows a quick reference for removal of OLD stock from the DB should it be required.
     - Detangling of Graphics card:
         Major rebuild of the graphics card table. Now includes all the aspects that were not available in 2015 due to
-        lack of time and compatability. When modeling is implimented, the missing specifications will be able to be
+        lack of time and compatibility. When modeling is implemented, the missing specifications will be able to be
         added with relative ease. At present, RAW (outdated and incomplete) data is only available.
 
 16.11.2018
@@ -54,12 +54,54 @@ PRE MODELS AND MAPPERS:
     Three products completed and detangled. Further refinements to the detangler classes made, repetive code has now
     been abolished.
 
-    In preperation for modelling, mapping, and repository interaction, the third and final stock table has been built
+    In preparation for modelling, mapping, and repository interaction, the third and final stock table has been built
     Legacy file (public->sql->legacy->stock _control) has been upated to: (public->sql->search->stock_control).
 
     To reduce unnecessary and one time use coding, the SQL changes to the latter file allow for quick reconciliation
     and reindexing of the stock, specifically the relationship between stocked_skus and stocked_products, which is a
     1-2-1 relationship.
+
+    Template built for proposed system.
+    HOME - SUPPLIERS - STOCK - UTILITIES
+    - HOME is unknown
+    - SUPPLIERS will download the stock records for all suppliers via FTP and update the stock database accordingly.
+        - Verification, Security,  Pricing, Quantity, Stock levels.
+    - STOCK - CRUD interface...
+    - UTILITIES - Detanglers & Other tools as required. Will not be needed by "final" build.
+
+17.11.2018
+    A Slight change to the product data structure... EAN (barcodes) have been reassigned to the stock control table.
+    It makes more sense as this will NEVER change and is more informational (packaging) than the objective (physical)
+
+19.11.2018
+    MODELLING:
+    Rather than completeing the detanglers for 30+ products, I have started creation on the engine that will run both
+    the stock control (admin) and link with the "shop". I have decided on the name THORN...
+    The model setup can be found in (private->THORN), which is currently in prototyping.
+    Products will be returned by one of three ways...
+        - 1: INDIVIDUALLY - I.e. by Model Number
+        - 2: GROUP - I.e. by manufacturer
+        - 3: SELECTION - I.e. Type & Manufacturer.
+    I have found previously that the best way to tackle isues like this is to actually call the model, populate the
+    model, then work out the best way to refine for removal of redundancy.
+    Get it working -> Get it working better...
+
+20.11.2018
+    Unlike similar systems I have worked on in the past, I am not going to be using the SELECT * when performing queries.
+    I am going to be using INFORMATION SCHEMA to get the names of the columns and SELECT as approporiate.
+
+    Prototyping has been a success. As previously mentioned, unlike other systems I have used which have implemneted
+    SELECT * (due to poor plannning) and have relied on hard coded table names (usually in arrays), THORN is dynamic
+    in gathering the table names required for stock_control and product.
+    The caveat in prototyping is that CURRENTLY, the cleint will only return the equivilnet of a SELECT *, but as far
+    as planning goes, I cannot invisage an occasion where only a PART model would need to be returned.
+    The prototyping development can be seen in (private->THORN->ParentClasses->Repository->Repository.php).
+    When the prototyping for UPDATE is being implemented, it may be necessary for a slight resturcturing or creation of
+    new methods to access the entity.
+
+    Merging of the tables stock_control and (prototyping) memory (and therefore ALL products) is a success. The next
+    step of development is to populate a model/object so manipulation can occur in memory.
+
 
 
 

@@ -59,11 +59,19 @@ ALTER TABLE stock_control DROP COLUMN active;
 
 ALTER TABLE stock_control DROP COLUMN quantity;
 
+ALTER TABLE stock_control CHANGE `cost_price` `price_ex_vat` float NOT NULL;
+
+ALTER TABLE stock_control CHANGE `bar_code` `EAN` varchar(255);
+
+ALTER TABLE stock_control CHANGE `postal_cost` `postage` float NOT NULL;
+
+ALTER TABLE stock_control ADD COLUMN supplier varchar(255) AFTER warranty;
+
+UPDATE stock_control SET supplier = 'Exertis' WHERE supplier IS NULL;
 
 
 
-
--- TO DO: DROP , BAR CODE??,
+-- TO DO: DROP , BAR CODE??,UPDATE
 
 --
 -- Dumping data for table `stock_control`

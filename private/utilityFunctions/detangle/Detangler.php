@@ -88,7 +88,6 @@ class Detangler
             $imageLink = $imageLink->getImageDirectory();
 
             // 4: Assign Common Variables
-            $EAN = "undefined";
             $description = "undefined";
             $modelNumber = $row['model_number'];
 
@@ -98,7 +97,7 @@ class Detangler
             $nonRefinedModelName = substr($buffer, $cut);
 
             // 6: Common Inserts Performed
-            $this->commonDatabaseInsert($modelNumber, $company, $imageLink, $description, $category, $EAN);
+            $this->commonDatabaseInsert($modelNumber, $company, $imageLink, $description, $category);
 
             // 7: Pass off to class for individual product categories:
             $this->callProductDetangler($nonRefinedModelName, $modelNumber);
@@ -113,13 +112,13 @@ class Detangler
      * @param $category
      * @param $EAN
      */
-    private function commonDatabaseInsert($modelNumber, $company, $imageLink, $description, $category, $EAN)
+    private function commonDatabaseInsert($modelNumber, $company, $imageLink, $description, $category)
     {
-        $sql = "INSERT INTO $this->category (model_number, company, image_folder, description, category, EAN) VALUES (?,?,?,?,?,?)";
+        $sql = "INSERT INTO $this->category (model_number, company, image_folder, description, category_type) VALUES (?,?,?,?,?)";
 
         $sqlStatement = $this->pdo->pdoConnection->prepare($sql);
 
-        $sqlStatement->execute([$modelNumber, $company, $imageLink, $description, $category, $EAN ]);
+        $sqlStatement->execute([$modelNumber, $company, $imageLink, $description, $category]);
 
         echo "PDOStatement::errorInfo():<br>";
 

@@ -1,11 +1,11 @@
 CREATE TABLE `components` (
     ID int NOT NULL AUTO_INCREMENT,
-    component varchar(255) NOT NULL,
+    category_type varchar(255) NOT NULL,
     PRIMARY KEY (ID),
-    UNIQUE KEY (`component`)
+    UNIQUE KEY (`category_type`)
 );
 
-INSERT INTO `components` (`component`) VALUES
+INSERT INTO `components` (`category_type`) VALUES
 ('motherboard'),
 ('processor'),
 ('memory'),
@@ -49,7 +49,6 @@ CREATE TABLE `motherboard` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
@@ -66,7 +65,6 @@ CREATE TABLE `processor` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
@@ -85,7 +83,6 @@ CREATE TABLE `internal_hard_disk` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
@@ -102,7 +99,6 @@ CREATE TABLE `internal_solid_disk` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
@@ -119,7 +115,6 @@ CREATE TABLE `power_supply` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
@@ -136,7 +131,6 @@ CREATE TABLE `pc_case` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
@@ -153,7 +147,6 @@ CREATE TABLE `heatsink` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),
@@ -170,7 +163,6 @@ CREATE TABLE `sound_card` (
     description varchar(255) NOT NULL,
     category varchar(255) NOT NULL,
     color varchar(20),
-    EAN varchar(255),
     PRIMARY KEY (ID),
     FOREIGN KEY (`company`) REFERENCES company(`manufacturer`),
     FOREIGN KEY (`category`) REFERENCES categories(`category`),

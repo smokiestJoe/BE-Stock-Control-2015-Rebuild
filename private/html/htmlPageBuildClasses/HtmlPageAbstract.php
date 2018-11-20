@@ -20,6 +20,28 @@ abstract class HtmlPageAbstract
             'content' => 'indexContent',
             'usescript' => false,
         ],
+        'suppliers' => [
+            'name' => 'suppliers',
+            'title' => 'Suppliers Page',
+            'header' => 'Supplier Reconcile',
+            'navlink' => [
+                'name' => 'Suppliers',
+                'link' => '/new_project/public/www/pages/suppliers.php'
+            ],
+            'content' => 'suppliersContent',
+            'usescript' => false,
+        ],
+        'stock' => [
+            'name' => 'stock',
+            'title' => 'Stock Page',
+            'header' => 'Stock Control',
+            'navlink' => [
+                'name' => 'Stock',
+                'link' => '/new_project/public/www/pages/stock.php'
+            ],
+            'content' => 'stockContent',
+            'usescript' => false,
+        ],
         'utilities' => [
             'name' => 'utilities',
             'title' => 'Utilities Page',

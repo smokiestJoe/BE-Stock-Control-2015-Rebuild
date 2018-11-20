@@ -9,3 +9,7 @@
 require_once __DIR__ . "/../../../public/content/indexContent.php";
 
 require_once __DIR__ . "/../../../public/content/utilitiesContent.php";
+
+require_once __DIR__ . "/../../../public/content/stockContent.php";
+
+require_once __DIR__ . "/../../../public/content/suppliersContent.php";
