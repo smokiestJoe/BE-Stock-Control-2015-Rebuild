@@ -6,9 +6,12 @@
  * Time: 13:06
  */
 
-class ObjectProduct_Memory
+class ObjectProduct_Memory extends ObjectProduct
 {
-    public $productProperties_Memory = [
+    /**
+     * @var array
+     */
+    public $productProperties_Product = [
         'mem_size' => null,
         'mem_denominator' => null,
         'mem_type' => null,
@@ -19,14 +22,75 @@ class ObjectProduct_Memory
         'mem_profile' => null,
     ];
 
+    /**
+     * ObjectProduct_Memory constructor.
+     */
     public function __construct()
     {
         echo "CREATED MEMORY<br>";
     }
 
-    public function retrieveID()
+    /**
+     * @return mixed
+     */
+    public function get_mem_size()
     {
-        echo "ID IS CAKE<br>";
-        // return new self($cake);
+        return $this->productProperties_Product['mem_size'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mem_denominator()
+    {
+        return $this->productProperties_Product['mem_denominator'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mem_type()
+    {
+        return $this->productProperties_Product['mem_type'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mem_connection()
+    {
+        return $this->productProperties_Product['mem_connection'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mem_speed()
+    {
+        return $this->productProperties_Product['mem_speed'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mem_oc_speed()
+    {
+        return $this->productProperties_Product['mem_oc_speed'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mem_pin()
+    {
+        return $this->productProperties_Product['mem_pin'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_mem_profile()
+    {
+        return $this->productProperties_Product['mem_profile'];
     }
 }

@@ -8,10 +8,26 @@
 
 class ObjectProduct
 {
-    public $productProperties_Generic = [
-        // stock_control
+    /**
+     * @var
+     */
+    private $productType;
+
+    /**
+     * @var array
+     * Foreign Key - Stock -> Product
+     */
+    public $productProperties_Common = [
         'model_number' => null,
+    ];
+
+    /**
+     * @var array
+     * Stock Table Fields
+     */
+    public $product_properties_Stock = [
         'price_ex_vat' => null,
+        'vat' => null,
         'price_inc_vat' => null,
         'margin_percent' => null,
         'postage' => null,
@@ -21,6 +37,13 @@ class ObjectProduct
         'warranty' => null,
         'supplier' => null,
         'supplier_number' => null,
+    ];
+
+    /**
+     * @var array
+     * Generic Product Fields
+     */
+    public $productProperties_Generic = [
         // categories
         'category' => null,
         //
@@ -33,18 +56,200 @@ class ObjectProduct
         'ID' => null,
     ];
 
-    private $productType;
-
+    /**
+     * ObjectProduct constructor.
+     * @param $productType
+     */
     public function __construct($productType)
     {
         echo "CREATING PRODUCT OBJECT<br>";
     }
 
-    public function retrieveID()
+    /**
+     * @param $productType
+     * @return mixed
+     * @throws Exception
+     */
+    public static function buildProduct($productType)
     {
-        echo "ID IS CAKE<br>";
-       // return new self($cake);
+        echo "PRODUCT BEING CREATED: PRODUCT TYPE: $productType<br>";
+
+        $productClass = "ObjectProduct_" . ucfirst($productType);
+
+        if (class_exists($productClass)) {
+
+            return new $productClass;
+
+        } else {
+
+            throw new Exception ("PRODUCT DOES NOT EXIST");
+        }
     }
+
+    /**
+     * GETTERS
+     */
+
+    /**
+     * @return mixed
+     */
+    public function get_model_number()
+    {
+        return $this->productProperties_Common['model_number'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_price_ex_vat()
+    {
+        return $this->productProperties_Common['price_ex_vat'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_vat()
+    {
+        return $this->productProperties_Common['vat'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_price_inc_vat()
+    {
+        return $this->productProperties_Common['price_inc_vat'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_margin_percent()
+    {
+        return $this->productProperties_Common['margin_percent'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_postage()
+    {
+        return $this->productProperties_Common['postage'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_sale_price()
+    {
+        return $this->productProperties_Common['sale_price'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_weight()
+    {
+        return $this->productProperties_Common['weight'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_EAN()
+    {
+        return $this->productProperties_Common['EAN'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_warranty()
+    {
+        return $this->productProperties_Common['warranty'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_supplier()
+    {
+        return $this->productProperties_Common['supplier'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_supplier_number()
+    {
+        return $this->productProperties_Common['supplier_number'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_category()
+    {
+        return $this->productProperties_Generic['category'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_category_type()
+    {
+        return $this->productProperties_Generic['category_type'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_company()
+    {
+        return $this->productProperties_Generic['company'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_name()
+    {
+        return $this->productProperties_Generic['name'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_image_folder()
+    {
+        return $this->productProperties_Generic['image_folder'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_color()
+    {
+        return $this->productProperties_Generic['color'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_ID()
+    {
+        return $this->productProperties_Generic['ID'];
+    }
+
+
+
+
+
+
+
+
+
 }
 
 

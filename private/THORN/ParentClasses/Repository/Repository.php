@@ -10,11 +10,15 @@ class Repository extends AbstractRepository
 {
     public $objectClass;
 
+    public $object;
+
     private $pdo;
 
     private $sqlColumnNames;
 
     private $tableName;
+
+    private $primarySql;
 
     private $productCategoryTypeColumnNames;
 
@@ -30,6 +34,14 @@ class Repository extends AbstractRepository
 
     private $arrCombinedStockAndProduct = [];
 
+    private $arrMapperObject = [
+        'ObjectProduct' => 'MapperObjectProduct',
+        'ObjectOrder' => 'MapperObjectOrder',
+        'ObjectCustomer' => 'MapperObjectCustomer',
+    ];
+
+    private $sqlStatements = '';
+
 
     public function __construct($class, $type = null)
     {
@@ -37,18 +49,26 @@ class Repository extends AbstractRepository
 
         $this->objectClass = $class;
 
-        $this->setupType($type);
+        $this->sqlStatements = $this->objectClass . 'Statements';
 
-        $this->getAllProductCategoryTypeColumns();
+        $this->setupTableName($type);
 
-        $this->getAllProductStockControlColumns();
+
+
+       // $this->getMapper();
+
+
+
+//        $this->getAllProductCategoryTypeColumns();
+//
+//        $this->getAllProductStockControlColumns();
 
         //$this->execute();
 
-        $this->query();
+        //$this->query();
     }
 
-    private function setupType($type)
+    private function setupTableName($type)
     {
         if ($this->objectClass == 'ObjectProduct') {
 
@@ -68,56 +88,80 @@ class Repository extends AbstractRepository
         }
     }
 
-    public function query()
+    private function getMapper($argument)
     {
-        $this->sqlColumnNames = $this->pdo->pdoConnection->query("
-
-            SELECT $this->strSQLProductCategoryTypeColumnNames, $this->strSQLProductStockControlColumnNames 
-            FROM $this->tableName b, stock_control a
-            WHERE b.model_number = a.model_number
-            
-        ");
-
-        $this->sqlColumnNames->fetch();
-
-        $finalArray = $this->getArrayCombinedStockAndProduct();
-
-        echo "
-            <table>
-                <thead>
-                    <tr>
-        ";
-            foreach ($finalArray as $header) {
-
-                echo "<th>$header</th>";
-
-            }
-        echo "              
-                    </tr>
-                </thead>
-                <tbody>
-        ";
-
-        foreach ($this->sqlColumnNames as $row) {
-
-            echo "<tr>";
-
-            foreach ($finalArray as $columnName) {
-
-                echo "<td> $row[$columnName] </td>";
-            }
-
-            echo "</tr>";
-
-
+        if (array_key_exists($this->objectClass, $this->arrMapperObject))
+        {
+            return new $this->arrMapperObject[$this->objectClass]($this->pdo, $this->tableName, $this->primarySql, $argument);
         }
-
-        echo "
-                </tbody>
-            </table>
-        ";
     }
 
+    public function initialiseObject()
+    {
+        if ($this->objectClass == 'ObjectProduct') {
+
+            $this->objectClass::buildProduct($this->tableName);
+
+        } elseif ($this->objectClass == 'ObjectOrder' || $this->objectClass == 'ObjectCustomer') {
+
+            return new $this->objectClass();
+
+        } else {
+
+            throw new Exception("FATAL ERROR: Unknown Object used - Died in Repository.");
+        }
+    }
+
+
+//    public function query()
+//    {
+//        $this->sqlColumnNames = $this->pdo->pdoConnection->query("
+//
+//            SELECT $this->strSQLProductCategoryTypeColumnNames, $this->strSQLProductStockControlColumnNames
+//            FROM $this->tableName b, stock_control a
+//            WHERE b.model_number = a.model_number
+//
+//        ");
+//
+//        $this->sqlColumnNames->fetch();
+//
+//        $finalArray = $this->getArrayCombinedStockAndProduct();
+//
+//        echo "
+//            <table>
+//                <thead>
+//                    <tr>
+//        ";
+//            foreach ($finalArray as $header) {
+//
+//                echo "<th>$header</th>";
+//
+//            }
+//        echo "
+//                    </tr>
+//                </thead>
+//                <tbody>
+//        ";
+//
+//        foreach ($this->sqlColumnNames as $row) {
+//
+//            echo "<tr>";
+//
+//            foreach ($finalArray as $columnName) {
+//
+//                echo "<td> $row[$columnName] </td>";
+//            }
+//
+//            echo "</tr>";
+//
+//
+//        }
+//
+//        echo "
+//                </tbody>
+//            </table>
+//        ";
+//    }
 
     public function execute()
     {
@@ -164,16 +208,56 @@ class Repository extends AbstractRepository
 
     public function create()
     {
+        $primarySql = new $this->sqlStatements('create', $this->pdo, $this->tableName);
+
+        echo $primarySql->getPrimarySql();
 
     }
 
-    public function read() // PASS IN THE WHERE CONDITION
+    public function read($argument = null) // PASS IN THE WHERE CONDITION
     {
+      //  $this->sqlStatements::generateReadSql($argument);
+
+        $primarySql = new $this->sqlStatements('read', $this->pdo, $this->tableName);
+
+        $this->primarySql = $primarySql->getPrimarySql();
+
+      //  echo $this->primarySql;
+
+        $this->getMapper($this->pdo, $this->tableName, 'read', $this->primarySql, $argument);
+
         // IF NULL, QUERY (STRAIGHT SELECT)
 
-        // IF NOT NULL, PREPARE (2 ARGUMNETS ALLOWED)
+        // IF NOT NULL, PREPARE (2 ARGUMENTS ALLOWED)
 
-        return new $this->objectClass($this->tableName);
+        // $this->initialiseObject();
+
+        /**
+         * GET ALL PRODUCTS / GET ALL ORDERS / GET ALL PRODUCTS
+         * GET ALL ORDERS - DATE / GET ALL PRODUCTS - DATE
+         * GET MODEL NUMBER / GET ORDER ID / GET CUSTOMER ID
+         * GET MODEL NAME / GET CUSTOMER NAME
+         */
+
+        /*
+         * Argument passed in can be a:
+         * Model Number /ID
+         * Date Range,
+         * Name
+         * Null = Nothing
+         */
+
+        // RERIEVE PRIMARY SQL ->
+
+        // RETRIVE ARGUMNETS
+
+        // RETRIAVE OBJECT CLASS
+
+        // PASS TO MAPPER
+
+        // PASS ARGUMENT TO MAPPER
+
+
 
     }
 
@@ -187,97 +271,59 @@ class Repository extends AbstractRepository
 
     }
 
-    private function getAllProductStockControlColumns()
-    {
-        $this->productStockControlColumnNames = $this->pdo->pdoConnection->query('SHOW columns FROM stock_control');
+//    private function getAllProductStockControlColumns()
+//    {
+//        $this->productStockControlColumnNames = $this->pdo->pdoConnection->query('SHOW columns FROM stock_control');
+//
+//        foreach ($this->productStockControlColumnNames as $row) {
+//
+//            $this->arrProductStockControlColumnNames[] = $row['Field'];
+//        }
+//
+//        $this->setAllProductStockControlColumnSql();
+//    }
+//
+//    private function getAllProductCategoryTypeColumns()
+//    {
+//        $this->productCategoryTypeColumnNames = $this->pdo->pdoConnection->query("SHOW columns FROM $this->tableName");
+//
+//        foreach ($this->productCategoryTypeColumnNames as $row) {
+//
+//            $this->arrProductCategoryTypeColumnNames[] = $row['Field'];
+//        }
+//
+//        $this->setAllProductCategoryColumnSql();
+//    }
+//
+//    private function setAllProductStockControlColumnSql()
+//    {
+//        foreach ($this->arrProductStockControlColumnNames as $column) {
+//
+//            $this->strSQLProductStockControlColumnNames .= 'a.' . $column . ',';
+//        }
+//
+//        $this->strSQLProductStockControlColumnNames = rtrim($this->strSQLProductStockControlColumnNames, ",");
+//
+//       // echo $this->strSQLProductStockControlColumnNames . "<br>";
+//    }
+//
+//    private function setAllProductCategoryColumnSql()
+//    {
+//        foreach ($this->arrProductCategoryTypeColumnNames as $column) {
+//
+//            $this->strSQLProductCategoryTypeColumnNames .= 'b.' . $column . ',';
+//        }
+//
+//        $this->strSQLProductCategoryTypeColumnNames = rtrim($this->strSQLProductCategoryTypeColumnNames, ",");
+//
+//    //    echo $this->strSQLProductCategoryTypeColumnNames . "<br>";
+//    }
 
-        foreach ($this->productStockControlColumnNames as $row) {
-
-            $this->arrProductStockControlColumnNames[] = $row['Field'];
-        }
-
-        $this->setAllProductStockControlColumnSql();
-    }
-
-    private function getAllProductCategoryTypeColumns()
-    {
-        $this->productCategoryTypeColumnNames = $this->pdo->pdoConnection->query("SHOW columns FROM $this->tableName");
-
-        foreach ($this->productCategoryTypeColumnNames as $row) {
-
-            $this->arrProductCategoryTypeColumnNames[] = $row['Field'];
-        }
-
-        $this->setAllProductCategoryColumnSql();
-    }
-
-    private function setAllProductStockControlColumnSql()
-    {
-        foreach ($this->arrProductStockControlColumnNames as $column) {
-
-            $this->strSQLProductStockControlColumnNames .= 'a.' . $column . ',';
-        }
-
-        $this->strSQLProductStockControlColumnNames = rtrim($this->strSQLProductStockControlColumnNames, ",");
-
-       // echo $this->strSQLProductStockControlColumnNames . "<br>";
-    }
-
-    private function setAllProductCategoryColumnSql()
-    {
-        foreach ($this->arrProductCategoryTypeColumnNames as $column) {
-
-            $this->strSQLProductCategoryTypeColumnNames .= 'b.' . $column . ',';
-        }
-
-        $this->strSQLProductCategoryTypeColumnNames = rtrim($this->strSQLProductCategoryTypeColumnNames, ",");
-
-    //    echo $this->strSQLProductCategoryTypeColumnNames . "<br>";
-    }
-
-    public function getArrayCombinedStockAndProduct()
-    {
-        $this->arrCombinedStockAndProduct = array_unique(array_merge($this->arrProductCategoryTypeColumnNames, $this->arrProductStockControlColumnNames));
-
-        return $this->arrCombinedStockAndProduct;
-    }
+//    public function getArrayCombinedStockAndProduct()
+//    {
+//        $this->arrCombinedStockAndProduct = array_unique(array_merge($this->arrProductCategoryTypeColumnNames, $this->arrProductStockControlColumnNames));
+//
+//        return $this->arrCombinedStockAndProduct;
+//    }
 }
 
-/*
- *
- *
- *
- * $this->sqlStatement->fetch();
-
-        foreach ($this->sqlStatement as $row)
-        {
-            // 1: Make Company & Category lowercase.
-            $companyLowercase = strtolower($row['manufacturer']);
-            $category = strtolower($row['type']);
-            $category = str_replace(' ', '_', $category);
-            $this->category = $category;
-
-            // 2: Standardise Company
-            $nonStandardisedCompany = new StandardiseCompany($companyLowercase);
-            $company = $nonStandardisedCompany->getStandardisedCompany();
-
-            // 3: RefineImagePath
-            $imageLink = new ImageReassigner($companyLowercase, $category, $row['model_number'], $row['image_link']);
-            $imageLink = $imageLink->getImageDirectory();
-
-            // 4: Assign Common Variables
-            $description = "undefined";
-            $modelNumber = $row['model_number'];
-
-            // 5: Generic Model Name Detangling
-            $buffer = substr($row['model_name'],4);
-            $cut = strpos($buffer, ' ');
-            $nonRefinedModelName = substr($buffer, $cut);
-
-            // 6: Common Inserts Performed
-            $this->commonDatabaseInsert($modelNumber, $company, $imageLink, $description, $category);
-
-            // 7: Pass off to class for individual product categories:
-            $this->callProductDetangler($nonRefinedModelName, $modelNumber);
-        }
- */

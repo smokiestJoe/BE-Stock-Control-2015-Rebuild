@@ -6,7 +6,7 @@
  * Time: 11:08
  */
 
-class ObjectFactory
+class RepositoryFactory
 {
     private $objectArray = [];
 
@@ -15,6 +15,7 @@ class ObjectFactory
         echo "OBJECT FACTORY ONLINE<br>";
     }
 
+    /*     REPOSITORY BUILD     */
     public static function build ($object, $type = null)
     {
         if ($object == '') {
@@ -42,7 +43,7 @@ class ObjectFactory
             }
         }
     }
-
+    /*     OBJECT BUILD     */
 //    public static function build ($object, $type = null)
 //    {
 //        if ($object == '') {
@@ -57,7 +58,9 @@ class ObjectFactory
 //
 //                if ($type != null) {
 //
-//                    return new $class($type);
+//                    //return new $class($type);
+//
+//                    $class::buildProduct($type);
 //
 //                } else {
 //
