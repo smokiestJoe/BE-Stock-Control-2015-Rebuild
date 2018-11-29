@@ -100,6 +100,8 @@ class ProductMapperObjectProduct extends AbstractProductMapper
 
     private function mapToModel()
     {
+
+
         //        $this->sqlData = $this->pdo->pdoConnection->query("        SELECT b. *, a. *
 //            FROM $this->tableName b, stock_control a
 //            WHERE b.model_number = a.model_number ");
@@ -118,7 +120,8 @@ class ProductMapperObjectProduct extends AbstractProductMapper
 
         //$cake = $this->objectClass::buildProduct($this->tableName, $arrData, $arrColumns);
 
-
+        /* CALL STATIC VALIDATION ON THE OBJECT PRODUCT */
+        $this->objectClass::validateModel($this->tableName, $this->stockAndProductTableColumns);
 
         //     $cake->sayHello();
         $c = 0;

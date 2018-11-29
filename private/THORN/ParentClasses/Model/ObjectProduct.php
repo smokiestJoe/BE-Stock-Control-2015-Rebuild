@@ -47,7 +47,7 @@ class ObjectProduct
      */
     public $productProperties_Generic = [
         // categories
-        'category' => null,
+        'category' => 'components',
         //
         'category_type' => null,
         // generic
@@ -56,6 +56,13 @@ class ObjectProduct
         'image_folder' => null,
         'color' => null,
         'ID' => null,
+    ];
+
+    public static $parentValidationArray = [
+        'model_number', 'price_ex_vat', 'vat', 'price_inc_vat','margin_percent',
+        'postage', 'sale_price', 'weight', 'EAN', 'warranty', 'supplier',
+        'supplier_number', 'category_type', 'company', 'name',
+        'image_folder', 'color', 'ID',
     ];
 
     /**
@@ -77,6 +84,37 @@ class ObjectProduct
 
             throw new Exception ("PRODUCT DOES NOT EXIST");
         }
+    }
+
+
+    public static function validateModel($childProduct, $columnsToBeValidated)
+    {
+        echo "CHILD CLASS IS: $childProduct<br>";
+
+        $productClass = "ObjectProduct_" . ucfirst($childProduct);
+
+        echo "$productClass<br>";
+
+        $parentValidationArray = self::$parentValidationArray;
+
+        $childValidationArray = $productClass::returnProductPropertiesArray();
+
+        $validationArray = array_merge($parentValidationArray, $childValidationArray);
+
+        $validate = array_diff($validationArray, $columnsToBeValidated);
+
+        if ($validate) {
+
+            echo "THERE IS A PROBLEM FORMING THE MODEL. ERROR FOUND IN: ";
+
+            foreach ($validate as $error) {
+
+                echo $error . "<br>";
+            }
+
+            throw new Exception("TERMINATING PROGRAM - DIED IN MODEL VALIDATION");
+        }
+
     }
 
     /**

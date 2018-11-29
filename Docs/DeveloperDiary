@@ -161,6 +161,10 @@ PRE MODELS AND MAPPERS:
     Once mapping to the model is complete, I will be investigating ways to identify if a product can be identifed by
     properties unique to the product, I.e. memory size, DPI, etc..
 
+    Before creating a new model, I have decided to validate the model before data entry commences. This way I can
+    be sure that if the DB is modified, the object will Fail. The final validation will inform the user on what
+    column/data the model failed on
+
 
 
 

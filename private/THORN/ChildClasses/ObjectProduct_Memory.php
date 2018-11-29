@@ -22,6 +22,11 @@ class ObjectProduct_Memory extends ObjectProduct
         'mem_profile' => null,
     ];
 
+    public static $childValidationArray = [
+        'mem_size', 'mem_denominator','mem_type', 'mem_connection',
+        'mem_speed', 'mem_oc_speed', 'mem_pin', 'mem_profile',
+    ];
+
     /**
      * ObjectProduct_Memory constructor.
      */
@@ -34,9 +39,11 @@ class ObjectProduct_Memory extends ObjectProduct
         echo "CREATED MEMORY<br>";
     }
 
-    public function sayHello()
+    public static function returnProductPropertiesArray()
     {
-        echo "<br>HELLO WORLD!<br>";
+        echo "VALIDATING MEMORY<br>";
+
+        return self::$childValidationArray;
     }
 
     /**

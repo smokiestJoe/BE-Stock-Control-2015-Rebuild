@@ -11,20 +11,20 @@ function stockContent()
     // REPO
     $product = RepositoryFactory::build('product', 'memory')->read()->findByAllProductType();
 
-
-    $product = RepositoryFactory::build('product', 'memory')->read()->findByProductModelNumber('CMK16GX4M4A2400C14R');
-
-
-    $product = RepositoryFactory::build('product', 'memory')->read()->findByProductName('dominator');
-
-
-    $product = RepositoryFactory::build('product', 'memory')->read()->findByProductCompany('corsair');
-
-
-    $product = RepositoryFactory::build('product', 'memory')->read()->findBySupplierName('Exertis');
-
-
-    $product = RepositoryFactory::build('product', 'memory')->read()->findBySupplierNumber('COR-VS1GSDS333');
+//
+//    $product = RepositoryFactory::build('product', 'memory')->read()->findByProductModelNumber('CMK16GX4M4A2400C14R');
+//
+//
+//    $product = RepositoryFactory::build('product', 'memory')->read()->findByProductName('dominator');
+//
+//
+//    $product = RepositoryFactory::build('product', 'memory')->read()->findByProductCompany('corsair');
+//
+//
+//    $product = RepositoryFactory::build('product', 'memory')->read()->findBySupplierName('Exertis');
+//
+//
+//    $product = RepositoryFactory::build('product', 'memory')->read()->findBySupplierNumber('COR-VS1GSDS333');
 
 
 
