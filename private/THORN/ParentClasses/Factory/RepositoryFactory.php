@@ -24,7 +24,7 @@ class RepositoryFactory
 
         } else {
 
-            $className = 'Object'.ucfirst($object);
+            $className = 'Object' . ucfirst($object);
 
             if (class_exists($className)) {
 
@@ -39,39 +39,8 @@ class RepositoryFactory
 
             } else {
 
-                throw new Exception('Class does not exist<br>');
+                throw new Exception("Class does not exist<br>");
             }
         }
     }
-    /*     OBJECT BUILD     */
-//    public static function build ($object, $type = null)
-//    {
-//        if ($object == '') {
-//
-//            throw new Exception('NO OBJECT SELECTED');
-//
-//        } else {
-//
-//            $class = 'Object'.ucfirst($object);
-//
-//            if (class_exists($class)) {
-//
-//                if ($type != null) {
-//
-//                    //return new $class($type);
-//
-//                    $class::buildProduct($type);
-//
-//                } else {
-//
-//                    return new $class();
-//                }
-//
-//            } else {
-//
-//                throw new Exception('OBJECT NOT FOUND<br>');
-//            }
-//
-//        }
-//    }
 }

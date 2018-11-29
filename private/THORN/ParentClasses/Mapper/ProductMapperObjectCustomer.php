@@ -6,10 +6,8 @@
  * Time: 14:19
  */
 
-class MapperObjectCustomer extends AbstractMapper
+class ProductMapperObjectCustomer
 {
-
-
     public function __construct()
     {
         echo "CUSTOMER MAPPER ONLINE";

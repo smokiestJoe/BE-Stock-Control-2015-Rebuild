@@ -25,9 +25,18 @@ class ObjectProduct_Memory extends ObjectProduct
     /**
      * ObjectProduct_Memory constructor.
      */
-    public function __construct()
+    public function __construct($arrSqlData = [], $arrSqlColumns = [])
     {
+        $this->sqlProductKeys = $arrSqlColumns;
+
+        $this->sqlProductValues = $arrSqlData;
+
         echo "CREATED MEMORY<br>";
+    }
+
+    public function sayHello()
+    {
+        echo "<br>HELLO WORLD!<br>";
     }
 
     /**

@@ -11,7 +11,9 @@ class ObjectProduct
     /**
      * @var
      */
-    private $productType;
+    protected $sqlProductKeys = [];
+
+    protected $sqlProductValues = [];
 
     /**
      * @var array
@@ -57,15 +59,6 @@ class ObjectProduct
     ];
 
     /**
-     * ObjectProduct constructor.
-     * @param $productType
-     */
-    public function __construct($productType)
-    {
-        echo "CREATING PRODUCT OBJECT<br>";
-    }
-
-    /**
      * @param $productType
      * @return mixed
      * @throws Exception
@@ -78,7 +71,7 @@ class ObjectProduct
 
         if (class_exists($productClass)) {
 
-            return new $productClass;
+            return new $productClass(isset($arrSqlData), isset($arrSqlColumns));
 
         } else {
 
@@ -241,15 +234,6 @@ class ObjectProduct
     {
         return $this->productProperties_Generic['ID'];
     }
-
-
-
-
-
-
-
-
-
 }
 
 

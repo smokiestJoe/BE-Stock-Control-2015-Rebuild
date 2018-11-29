@@ -6,7 +6,7 @@
  * Time: 14:20
  */
 
-class MapperObjectOrder extends AbstractMapper
+class ProductMapperObjectOrder
 {
     public function __construct()
     {

@@ -20,24 +20,14 @@ class Repository extends AbstractRepository
 
     private $primarySql;
 
-    private $productCategoryTypeColumnNames;
-
-    private $productStockControlColumnNames;
-
     private $arrProductCategoryTypeColumnNames = [];
-
-    private $arrProductStockControlColumnNames = [];
 
     private $strSQLProductCategoryTypeColumnNames = '';
 
-    private $strSQLProductStockControlColumnNames = '';
-
-    private $arrCombinedStockAndProduct = [];
-
     private $arrMapperObject = [
-        'ObjectProduct' => 'MapperObjectProduct',
-        'ObjectOrder' => 'MapperObjectOrder',
-        'ObjectCustomer' => 'MapperObjectCustomer',
+        'ObjectProduct' => 'ProductMapperObjectProduct',
+        'ObjectOrder' => 'ProductMapperObjectOrder',
+        'ObjectCustomer' => 'ProductMapperObjectCustomer',
     ];
 
     private $sqlStatements = '';
@@ -52,20 +42,6 @@ class Repository extends AbstractRepository
         $this->sqlStatements = $this->objectClass . 'Statements';
 
         $this->setupTableName($type);
-
-
-
-       // $this->getMapper();
-
-
-
-//        $this->getAllProductCategoryTypeColumns();
-//
-//        $this->getAllProductStockControlColumns();
-
-        //$this->execute();
-
-        //$this->query();
     }
 
     private function setupTableName($type)
@@ -88,115 +64,60 @@ class Repository extends AbstractRepository
         }
     }
 
-    private function getMapper($argument)
+    private function getMapper($queryType, $stockAndProductTable, $argument)
     {
         if (array_key_exists($this->objectClass, $this->arrMapperObject))
         {
-            return new $this->arrMapperObject[$this->objectClass]($this->pdo, $this->tableName, $this->primarySql, $argument);
+            echo  gettype($this->primarySql) . '<br>' .  $this->primarySql . '<br>';
+
+            return new $this->arrMapperObject[$this->objectClass]($this->pdo, $this->objectClass, $this->tableName, $queryType, $stockAndProductTable, $this->primarySql, $argument);
         }
     }
 
-    public function initialiseObject()
-    {
-        if ($this->objectClass == 'ObjectProduct') {
-
-            $this->objectClass::buildProduct($this->tableName);
-
-        } elseif ($this->objectClass == 'ObjectOrder' || $this->objectClass == 'ObjectCustomer') {
-
-            return new $this->objectClass();
-
-        } else {
-
-            throw new Exception("FATAL ERROR: Unknown Object used - Died in Repository.");
-        }
-    }
-
-
-//    public function query()
+//    public function initialiseObject()
 //    {
-//        $this->sqlColumnNames = $this->pdo->pdoConnection->query("
+//        if ($this->objectClass == 'ObjectProduct') {
 //
-//            SELECT $this->strSQLProductCategoryTypeColumnNames, $this->strSQLProductStockControlColumnNames
-//            FROM $this->tableName b, stock_control a
-//            WHERE b.model_number = a.model_number
+//            $this->objectClass::buildProduct($this->tableName);
 //
-//        ");
+//        } elseif ($this->objectClass == 'ObjectOrder' || $this->objectClass == 'ObjectCustomer') {
 //
+//            return new $this->objectClass();
+//
+//        } else {
+//
+//            throw new Exception("FATAL ERROR: Unknown Object used - Died in Repository.");
+//        }
+//    }
+
+//    public function execute()
+//    {
+//        $this->sqlColumnNames = $this->pdo->pdoConnection->prepare("SELECT $this->strSQLProductCategoryTypeColumnNames FROM $this->tableName WHERE mem_type = ? AND name = ?");
+//
+//        $this->sqlColumnNames->execute(['DDR4', 'Dominator Platinum']);
+//
+//        $this->fetch();
+//
+//        echo "PDOStatement::errorInfo():<br>";
+//
+//        $arr = $this->sqlColumnNames->errorInfo();
+//
+//        print_r($arr)."<br><br>";
+//    }
+//
+//    public function fetch()
+//    {
 //        $this->sqlColumnNames->fetch();
-//
-//        $finalArray = $this->getArrayCombinedStockAndProduct();
-//
-//        echo "
-//            <table>
-//                <thead>
-//                    <tr>
-//        ";
-//            foreach ($finalArray as $header) {
-//
-//                echo "<th>$header</th>";
-//
-//            }
-//        echo "
-//                    </tr>
-//                </thead>
-//                <tbody>
-//        ";
 //
 //        foreach ($this->sqlColumnNames as $row) {
 //
-//            echo "<tr>";
+//            foreach($this->arrProductCategoryTypeColumnNames as $columnName) {
 //
-//            foreach ($finalArray as $columnName) {
-//
-//                echo "<td> $row[$columnName] </td>";
+//                echo $row[$columnName];
 //            }
-//
-//            echo "</tr>";
-//
-//
+//            echo "<br>";
 //        }
-//
-//        echo "
-//                </tbody>
-//            </table>
-//        ";
 //    }
-
-    public function execute()
-    {
-        $this->sqlColumnNames = $this->pdo->pdoConnection->prepare("SELECT $this->strSQLProductCategoryTypeColumnNames FROM $this->tableName WHERE mem_type = ? AND name = ?");
-
-        $this->sqlColumnNames->execute(['DDR4', 'Dominator Platinum']);
-
-        $this->fetch();
-
-        echo "PDOStatement::errorInfo():<br>";
-
-        $arr = $this->sqlColumnNames->errorInfo();
-
-        print_r($arr)."<br><br>";
-    }
-
-    public function fetch()
-    {
-        $this->sqlColumnNames->fetch();
-
-        foreach ($this->sqlColumnNames as $row) {
-
-            foreach($this->arrProductCategoryTypeColumnNames as $columnName) {
-
-                echo $row[$columnName];
-            }
-
-
-
-
-            echo "<br>";
-
-
-        }
-    }
 
     // select (Everything, Conditional)
 
@@ -208,7 +129,9 @@ class Repository extends AbstractRepository
 
     public function create()
     {
-        $primarySql = new $this->sqlStatements('create', $this->pdo, $this->tableName);
+        $queryType = 'create';
+
+        $primarySql = new $this->sqlStatements($queryType, $this->pdo, $this->tableName);
 
         echo $primarySql->getPrimarySql();
 
@@ -216,15 +139,19 @@ class Repository extends AbstractRepository
 
     public function read($argument = null) // PASS IN THE WHERE CONDITION
     {
+        echo "CALL ONE: REPOSITORY READ <br><br>";
+        $queryType = 'read';
       //  $this->sqlStatements::generateReadSql($argument);
 
-        $primarySql = new $this->sqlStatements('read', $this->pdo, $this->tableName);
+        $primarySql = new $this->sqlStatements($queryType, $this->pdo, $this->tableName);
 
         $this->primarySql = $primarySql->getPrimarySql();
 
-      //  echo $this->primarySql;
+        $columnsAndData = $primarySql->getColumnsAndData();
 
-        $this->getMapper($this->pdo, $this->tableName, 'read', $this->primarySql, $argument);
+       // echo  gettype($this->primarySql) . '<br>' .  $this->primarySql . '<br>';
+
+        return $this->getMapper($queryType, $columnsAndData, $argument);
 
         // IF NULL, QUERY (STRAIGHT SELECT)
 
@@ -263,67 +190,13 @@ class Repository extends AbstractRepository
 
     public function update()
     {
-
+        $queryType = 'update';
     }
 
     public function delete()
     {
-
+        $queryType = 'delete';
     }
 
-//    private function getAllProductStockControlColumns()
-//    {
-//        $this->productStockControlColumnNames = $this->pdo->pdoConnection->query('SHOW columns FROM stock_control');
-//
-//        foreach ($this->productStockControlColumnNames as $row) {
-//
-//            $this->arrProductStockControlColumnNames[] = $row['Field'];
-//        }
-//
-//        $this->setAllProductStockControlColumnSql();
-//    }
-//
-//    private function getAllProductCategoryTypeColumns()
-//    {
-//        $this->productCategoryTypeColumnNames = $this->pdo->pdoConnection->query("SHOW columns FROM $this->tableName");
-//
-//        foreach ($this->productCategoryTypeColumnNames as $row) {
-//
-//            $this->arrProductCategoryTypeColumnNames[] = $row['Field'];
-//        }
-//
-//        $this->setAllProductCategoryColumnSql();
-//    }
-//
-//    private function setAllProductStockControlColumnSql()
-//    {
-//        foreach ($this->arrProductStockControlColumnNames as $column) {
-//
-//            $this->strSQLProductStockControlColumnNames .= 'a.' . $column . ',';
-//        }
-//
-//        $this->strSQLProductStockControlColumnNames = rtrim($this->strSQLProductStockControlColumnNames, ",");
-//
-//       // echo $this->strSQLProductStockControlColumnNames . "<br>";
-//    }
-//
-//    private function setAllProductCategoryColumnSql()
-//    {
-//        foreach ($this->arrProductCategoryTypeColumnNames as $column) {
-//
-//            $this->strSQLProductCategoryTypeColumnNames .= 'b.' . $column . ',';
-//        }
-//
-//        $this->strSQLProductCategoryTypeColumnNames = rtrim($this->strSQLProductCategoryTypeColumnNames, ",");
-//
-//    //    echo $this->strSQLProductCategoryTypeColumnNames . "<br>";
-//    }
-
-//    public function getArrayCombinedStockAndProduct()
-//    {
-//        $this->arrCombinedStockAndProduct = array_unique(array_merge($this->arrProductCategoryTypeColumnNames, $this->arrProductStockControlColumnNames));
-//
-//        return $this->arrCombinedStockAndProduct;
-//    }
 }
 

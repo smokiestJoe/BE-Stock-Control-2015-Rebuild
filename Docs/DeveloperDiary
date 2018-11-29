@@ -94,7 +94,7 @@ PRE MODELS AND MAPPERS:
     SELECT * (due to poor planning) and have relied on hard coded table names (usually in arrays), THORN is dynamic
     in gathering the table names required for stock_control and product.
     The caveat in prototyping is that CURRENTLY, the client will only return the equivalent of a SELECT *, but as far
-    as planning goes, I cannot invisage an occasion where only a PART model would need to be returned.
+    as planning goes, I cannot envisage an occasion where only a PART model would need to be returned.
     The prototyping development can be seen in (private->THORN->ParentClasses->Repository->Repository.php).
     When the prototyping for UPDATE is being implemented, it may be necessary for a slight restructuring or creation of
     new methods to access the entity.
@@ -119,7 +119,47 @@ PRE MODELS AND MAPPERS:
     which then passes the statement to the mapper
     (private/THORN/ParentClasses/Mapper/MapperObjectXXXXX)
     which then returns a model
-    (private/THORN/ParentClasses/Model/
+    (private/THORN/ParentClasses/Model/)
+
+28.11.2018
+    The relationship for reading a single/a collection of entities has been established. Model population has not yet
+    been completed, however, the ability to retrieve a product (and theoretically an order and/or a customer) and linking
+    two tables WITHOUT the need for a SELECT * has been achieved. As the table names are read from the DB and the query
+    formulated based on that, it would be VERY simple to remove (via string/array manipulation) to remove fields that
+    are unwanted.
+
+    It has become apparent that when we are Reading/Updating, the order goes
+    -> Statement->Mappper->Model,
+
+    When Creating
+    -> Model -> Statement -> Mapper
+
+    When deleting? un-certain.
+
+    - While preparing the model collection, a inconsitency has arisen... Despite 25 records being displayed in the DB
+    and the manual query in the DB returing 25 results, only 24 are being retunred populated and one displayed blank.
+    If I LIMIT 1, I get 0, if I LIMIT 2, I get one etc... This will require further investigation.
+
+29.11.2018
+    A quick google showed that I was using PDO::FETCH as opposed to PDO::FETCH ALL. - All result sets have now been
+    returned correctly.
+
+    FAST building has taken place since the fetch error was corrected. The mapper for the product READ model is almost
+    complete. There are six methods used to identify a GENERIC product:
+    abstract function findByAllProductType();
+
+        abstract function findByProductModelNumber($modelNumber);
+
+        abstract function findByProductName($productName);
+
+        abstract function findByProductCompany($companyName);
+
+        abstract function findBySupplierName($supplierName);
+
+        abstract function findBySupplierNumber($supplierNumber);
+
+    Once mapping to the model is complete, I will be investigating ways to identify if a product can be identifed by
+    properties unique to the product, I.e. memory size, DPI, etc..
 
 
 

@@ -6,7 +6,7 @@
  * Time: 10:43
  */
 
-class ObjectProductStatements
+class ObjectProductStatements extends AbstractStatements
 {
     private $sql = '';
 
@@ -28,13 +28,19 @@ class ObjectProductStatements
 
     private $strSQLProductStockControlColumnNames = '';
 
-
+    private $arrQueryCall = [
+        'create' => 'generateCreateSql',
+        'read' => 'generateReadSql',
+        'update' => 'generateUpdateSql',
+        'delete' => 'generateDeletSql',
+    ];
 
     public function __construct($command, $pdo, $tableName)
     {
         /* DB Connection */
         $this->pdo = $pdo;
 
+        /* Table Name for search i.e. memory, graphics card etc... */
         $this->tableName = $tableName;
 
         /* Returns a comma separated string of the column Names */
@@ -46,23 +52,16 @@ class ObjectProductStatements
         $this->determinePrimarySql($command);
     }
 
-    public function determinePrimarySql($command)
+    private function determinePrimarySql($command)
     {
-        if ($command == 'create') {
+        if (array_key_exists($command, $this->arrQueryCall)) {
 
-            $this->generateCreateSql();
+            $executeMemberFunction = $this->arrQueryCall[$command];
+            $this->$executeMemberFunction();
 
-        } elseif ($command == 'read') {
+        } else {
 
-            $this->generateReadSql();
-
-        } elseif ($command == 'update') {
-
-            $this->generateUpdateSql();
-
-        } elseif ($command == 'delete') {
-
-            $this->generateDeleteSql();
+            throw new Exception ("SOMETHING WENT VERY WRONG - DIED IN PRODUCT STATEMENT");
         }
     }
 
@@ -71,27 +70,26 @@ class ObjectProductStatements
         return $this->sql;
     }
 
-
-    public function generateCreateSql()
+    protected function generateCreateSql()
     {
         $this->sql = "YOU ARE NOW IN A CREATE STATEMENT<br>";
     }
 
-    public function generateReadSql()
+    protected function generateReadSql()
     {
         $this->sql = "      
             SELECT $this->strSQLProductCategoryTypeColumnNames, $this->strSQLProductStockControlColumnNames
             FROM $this->tableName b, stock_control a
-            WHERE b.model_number = a.model_number   
+            WHERE b.model_number = a.model_number 
         ";
     }
 
-    public function generateUpdateSql()
+    protected function generateUpdateSql()
     {
         $this->sql =  "YOU ARE NOW IN A UPDATE STATEMENT<br>";
     }
 
-    public function generateDeleteSql()
+    protected function generateDeleteSql()
     {
         $this->sql =  "YOU ARE NOW IN A DELETE STATEMENT<br>";
     }
@@ -107,6 +105,8 @@ class ObjectProductStatements
             $this->arrProductStockControlColumnNames[] = $row['Field'];
         }
 
+        $this->productStockControlColumnNames = null;
+
         $this->setAllProductStockControlColumnSql();
     }
 
@@ -118,6 +118,8 @@ class ObjectProductStatements
 
             $this->arrProductCategoryTypeColumnNames[] = $row['Field'];
         }
+
+        $this->productCategoryTypeColumnNames = null;
 
         $this->setAllProductCategoryColumnSql();
     }
@@ -142,11 +144,11 @@ class ObjectProductStatements
         $this->strSQLProductCategoryTypeColumnNames = rtrim($this->strSQLProductCategoryTypeColumnNames, ",");
     }
 
-//    public function getArrayCombinedStockAndProduct()
-//    {
-//        $this->arrCombinedStockAndProduct = array_unique(array_merge($this->arrProductCategoryTypeColumnNames, $this->arrProductStockControlColumnNames));
-//
-//        return $this->arrCombinedStockAndProduct;
-//    }
+    public function getColumnsAndData()
+    {
+        $this->arrCombinedStockAndProduct = array_unique(array_merge($this->arrProductCategoryTypeColumnNames, $this->arrProductStockControlColumnNames));
+
+        return $this->arrCombinedStockAndProduct;
+    }
 
 }
