@@ -6,8 +6,13 @@
  * Time: 11:12
  */
 
-class ObjectOrder
+class ObjectOrder extends AbstractObject
 {
+    public static function validateModel($tableName, $columns)
+    {
+        // TODO: Implement validateModel() method.
+    }
+
     public function __construct()
     {
         echo "CREATING ORDER OBJECT<br>";

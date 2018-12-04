@@ -14,6 +14,8 @@ class ObjectProduct_Case_fan extends ObjectProduct
 
         $this->sqlProductValues = $arrColumns;
 
+        $this->productProperties_Generic['category'] = 'components';
+
         echo "CREATED CASE FAN<br>";
     }
 }

@@ -6,14 +6,22 @@
  * Time: 11:12
  */
 
-class ObjectProduct
+class ObjectProduct extends AbstractObject
 {
     /**
      * @var
      */
     protected $sqlProductKeys = [];
 
+    /**
+     * @var array
+     */
     protected $sqlProductValues = [];
+
+    /**
+     * @var array
+     */
+    protected $productProperties = [];
 
     /**
      * @var array
@@ -27,7 +35,7 @@ class ObjectProduct
      * @var array
      * Stock Table Fields
      */
-    public $product_properties_Stock = [
+    protected $product_properties_Stock = [
         'price_ex_vat' => null,
         'vat' => null,
         'price_inc_vat' => null,
@@ -45,9 +53,9 @@ class ObjectProduct
      * @var array
      * Generic Product Fields
      */
-    public $productProperties_Generic = [
+    protected $productProperties_Generic = [
         // categories
-        'category' => 'components',
+        'category' => null,
         //
         'category_type' => null,
         // generic
@@ -58,6 +66,9 @@ class ObjectProduct
         'ID' => null,
     ];
 
+    /**
+     * @var array
+     */
     public static $parentValidationArray = [
         'model_number', 'price_ex_vat', 'vat', 'price_inc_vat','margin_percent',
         'postage', 'sale_price', 'weight', 'EAN', 'warranty', 'supplier',
@@ -70,7 +81,7 @@ class ObjectProduct
      * @return mixed
      * @throws Exception
      */
-    public static function buildProduct($productType)
+    public static function buildProduct($productType, $arrSqlData, $arrSqlColumns)
     {
         echo "PRODUCT BEING CREATED: PRODUCT TYPE: $productType<br>";
 
@@ -78,7 +89,7 @@ class ObjectProduct
 
         if (class_exists($productClass)) {
 
-            return new $productClass(isset($arrSqlData), isset($arrSqlColumns));
+            return new $productClass($arrSqlData, $arrSqlColumns);
 
         } else {
 
@@ -86,7 +97,11 @@ class ObjectProduct
         }
     }
 
-
+    /**
+     * @param $childProduct
+     * @param $columnsToBeValidated
+     * @throws Exception
+     */
     public static function validateModel($childProduct, $columnsToBeValidated)
     {
         echo "CHILD CLASS IS: $childProduct<br>";
@@ -101,20 +116,31 @@ class ObjectProduct
 
         $validationArray = array_merge($parentValidationArray, $childValidationArray);
 
-        $validate = array_diff($validationArray, $columnsToBeValidated);
+        $validateDifference = array_diff($validationArray, $columnsToBeValidated);
 
-        if ($validate) {
+        if ($validateDifference) {
 
             echo "THERE IS A PROBLEM FORMING THE MODEL. ERROR FOUND IN: ";
 
-            foreach ($validate as $error) {
+            foreach ($validateDifference as $error) {
 
                 echo $error . "<br>";
             }
 
             throw new Exception("TERMINATING PROGRAM - DIED IN MODEL VALIDATION");
         }
+    }
 
+    /**
+     * @return array
+     */
+    protected function mergeParentArrays()
+    {
+        $parentArray = array_merge($this->productProperties_Common, $this->product_properties_Stock);
+
+        $parentArray = array_merge($parentArray, $this->productProperties_Generic);
+
+        return $parentArray;
     }
 
     /**
@@ -126,7 +152,7 @@ class ObjectProduct
      */
     public function get_model_number()
     {
-        return $this->productProperties_Common['model_number'];
+        return $this->productProperties['model_number'];
     }
 
     /**
@@ -134,7 +160,7 @@ class ObjectProduct
      */
     public function get_price_ex_vat()
     {
-        return $this->productProperties_Common['price_ex_vat'];
+        return $this->productProperties['price_ex_vat'];
     }
 
     /**
@@ -142,7 +168,7 @@ class ObjectProduct
      */
     public function get_vat()
     {
-        return $this->productProperties_Common['vat'];
+        return $this->productProperties['vat'];
     }
 
     /**
@@ -150,7 +176,7 @@ class ObjectProduct
      */
     public function get_price_inc_vat()
     {
-        return $this->productProperties_Common['price_inc_vat'];
+        return $this->productProperties['price_inc_vat'];
     }
 
     /**
@@ -158,7 +184,7 @@ class ObjectProduct
      */
     public function get_margin_percent()
     {
-        return $this->productProperties_Common['margin_percent'];
+        return $this->productProperties['margin_percent'];
     }
 
     /**
@@ -166,7 +192,7 @@ class ObjectProduct
      */
     public function get_postage()
     {
-        return $this->productProperties_Common['postage'];
+        return $this->productProperties['postage'];
     }
 
     /**
@@ -174,7 +200,7 @@ class ObjectProduct
      */
     public function get_sale_price()
     {
-        return $this->productProperties_Common['sale_price'];
+        return $this->productProperties['sale_price'];
     }
 
     /**
@@ -182,7 +208,7 @@ class ObjectProduct
      */
     public function get_weight()
     {
-        return $this->productProperties_Common['weight'];
+        return $this->productProperties['weight'];
     }
 
     /**
@@ -190,7 +216,7 @@ class ObjectProduct
      */
     public function get_EAN()
     {
-        return $this->productProperties_Common['EAN'];
+        return $this->productProperties['EAN'];
     }
 
     /**
@@ -198,7 +224,7 @@ class ObjectProduct
      */
     public function get_warranty()
     {
-        return $this->productProperties_Common['warranty'];
+        return $this->productProperties['warranty'];
     }
 
     /**
@@ -206,7 +232,7 @@ class ObjectProduct
      */
     public function get_supplier()
     {
-        return $this->productProperties_Common['supplier'];
+        return $this->productProperties['supplier'];
     }
 
     /**
@@ -214,7 +240,7 @@ class ObjectProduct
      */
     public function get_supplier_number()
     {
-        return $this->productProperties_Common['supplier_number'];
+        return $this->productProperties['supplier_number'];
     }
 
     /**
@@ -222,7 +248,7 @@ class ObjectProduct
      */
     public function get_category()
     {
-        return $this->productProperties_Generic['category'];
+        return $this->productProperties['category'];
     }
 
     /**
@@ -230,7 +256,7 @@ class ObjectProduct
      */
     public function get_category_type()
     {
-        return $this->productProperties_Generic['category_type'];
+        return $this->productProperties['category_type'];
     }
 
     /**
@@ -238,7 +264,7 @@ class ObjectProduct
      */
     public function get_company()
     {
-        return $this->productProperties_Generic['company'];
+        return $this->productProperties['company'];
     }
 
     /**
@@ -246,7 +272,7 @@ class ObjectProduct
      */
     public function get_name()
     {
-        return $this->productProperties_Generic['name'];
+        return $this->productProperties['name'];
     }
 
     /**
@@ -273,22 +299,3 @@ class ObjectProduct
         return $this->productProperties_Generic['ID'];
     }
 }
-
-
-
-
-/*
- *
- *
- *     mem_size varchar(10) NOT NULL,
-    mem_denominator varchar(20) NOT NULL,
-    mem_type varchar(20) NOT NULL,
-    mem_connection varchar(20) NOT NULL,
-    mem_speed varchar(20) NOT NULL,
-    mem_oc_speed varchar(20),
-    mem_pin varchar(20) NOT NULL,
-    mem_profile boolean NOT NULL,
- *
- *
- */
-

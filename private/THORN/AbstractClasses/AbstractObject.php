@@ -8,5 +8,5 @@
 
 abstract class AbstractObject
 {
-
+    abstract public static function validateModel($tableName, $columns);
 }

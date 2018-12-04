@@ -14,6 +14,8 @@ class ObjectProduct_Graphics_card extends ObjectProduct
 
         $this->sqlProductValues = $arrColumns;
 
+        $this->productProperties_Generic['category'] = 'components';
+
         echo "CREATED GRAPHICS CARD<br>";
     }
 }

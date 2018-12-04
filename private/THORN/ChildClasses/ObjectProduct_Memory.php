@@ -11,7 +11,7 @@ class ObjectProduct_Memory extends ObjectProduct
     /**
      * @var array
      */
-    public $productProperties_Product = [
+    private $productProperties_Product = [
         'mem_size' => null,
         'mem_denominator' => null,
         'mem_type' => null,
@@ -22,23 +22,17 @@ class ObjectProduct_Memory extends ObjectProduct
         'mem_profile' => null,
     ];
 
+    /**
+     * @var array
+     */
     public static $childValidationArray = [
         'mem_size', 'mem_denominator','mem_type', 'mem_connection',
         'mem_speed', 'mem_oc_speed', 'mem_pin', 'mem_profile',
     ];
 
     /**
-     * ObjectProduct_Memory constructor.
+     * @return array
      */
-    public function __construct($arrSqlData = [], $arrSqlColumns = [])
-    {
-        $this->sqlProductKeys = $arrSqlColumns;
-
-        $this->sqlProductValues = $arrSqlData;
-
-        echo "CREATED MEMORY<br>";
-    }
-
     public static function returnProductPropertiesArray()
     {
         echo "VALIDATING MEMORY<br>";
@@ -47,11 +41,51 @@ class ObjectProduct_Memory extends ObjectProduct
     }
 
     /**
+     * ObjectProduct_Memory constructor.
+     */
+    public function __construct($arrSqlData, $arrSqlColumns)
+    {
+        $this->sqlProductKeys = $arrSqlColumns;
+
+        $this->sqlProductValues = $arrSqlData;
+
+        $this->productProperties_Generic['category'] = 'components';
+
+        $this->hydrateModel();
+
+        echo "CREATED MEMORY<br>";
+    }
+
+    /**
+     *
+     */
+    private function hydrateModel()
+    {
+        $this->productProperties = array_merge($this->productProperties_Product, $this->mergeParentArrays());
+
+        foreach ($this->sqlProductKeys as $key) {
+
+            $this->productProperties[$key] = $this->sqlProductValues[$key];
+        }
+    }
+
+    /**
+     *
+     */
+    public function modelTest()
+    {
+        foreach ($this->productProperties as $productKey => $productValue) {
+
+            echo "KEY: $productKey => VALUE: $productValue<br>";
+        }
+    }
+
+    /**
      * @return mixed
      */
     public function get_mem_size()
     {
-        return $this->productProperties_Product['mem_size'];
+        return $this->productProperties['mem_size'];
     }
 
     /**
@@ -59,7 +93,7 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     public function get_mem_denominator()
     {
-        return $this->productProperties_Product['mem_denominator'];
+        return $this->productProperties['mem_denominator'];
     }
 
     /**
@@ -67,7 +101,7 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     public function get_mem_type()
     {
-        return $this->productProperties_Product['mem_type'];
+        return $this->productProperties['mem_type'];
     }
 
     /**
@@ -75,7 +109,7 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     public function get_mem_connection()
     {
-        return $this->productProperties_Product['mem_connection'];
+        return $this->productProperties['mem_connection'];
     }
 
     /**
@@ -83,7 +117,7 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     public function get_mem_speed()
     {
-        return $this->productProperties_Product['mem_speed'];
+        return $this->productProperties['mem_speed'];
     }
 
     /**
@@ -91,7 +125,7 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     public function get_mem_oc_speed()
     {
-        return $this->productProperties_Product['mem_oc_speed'];
+        return $this->productProperties['mem_oc_speed'];
     }
 
     /**
@@ -99,7 +133,7 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     public function get_mem_pin()
     {
-        return $this->productProperties_Product['mem_pin'];
+        return $this->productProperties['mem_pin'];
     }
 
     /**
@@ -107,6 +141,6 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     public function get_mem_profile()
     {
-        return $this->productProperties_Product['mem_profile'];
+        return $this->productProperties['mem_profile'];
     }
 }

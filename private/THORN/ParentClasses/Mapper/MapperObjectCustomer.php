@@ -3,26 +3,24 @@
  * Created by PhpStorm.
  * User: Josep
  * Date: 23/11/2018
- * Time: 14:20
+ * Time: 14:19
  */
 
-class ProductMapperObjectOrder
+class MapperObjectCustomer
 {
     public function __construct()
     {
-        echo "ORDER MAPPER ONLINE";
+        echo "CUSTOMER MAPPER ONLINE";
     }
 
     public function create()
     {
         // TODO: Implement create() method.
-        echo "CREATING A PRODUCT OBJECT:<br>";
     }
 
     public function read()
     {
         // TODO: Implement read() method.
-        echo "CREATING A PRODUCT OBJECT:<br>";
     }
 
     public function update()

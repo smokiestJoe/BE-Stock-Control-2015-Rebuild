@@ -6,7 +6,7 @@
  * Time: 14:19
  */
 
-class ProductMapperObjectProduct extends AbstractProductMapper
+class MapperObjectProduct extends AbstractMapper
 {
     private $pdo;
 
@@ -23,6 +23,8 @@ class ProductMapperObjectProduct extends AbstractProductMapper
     private $queryType;
 
     private $sqlData;
+
+    private $arrReturnObjects = [];
 
     public function __construct($pdo, $objectClass, $tableName, $queryType, $stockAndProductTable, $primarySql, $arguments = null)
     {
@@ -97,73 +99,76 @@ class ProductMapperObjectProduct extends AbstractProductMapper
         $this->mapToModel();
     }
 
-
-    private function mapToModel()
+    protected function mapToModel()
     {
-
-
-        //        $this->sqlData = $this->pdo->pdoConnection->query("        SELECT b. *, a. *
-//            FROM $this->tableName b, stock_control a
-//            WHERE b.model_number = a.model_number ");
-
-        //  $this->sqlData = $this->pdo->pdoConnection->query("SELECT * FROM memory");
-
-
-        //  $this->sqlData->fetch();
-
         $arrSqlData = $this->sqlData->fetchAll();
 
-        $arrData = [];
-        $arrColumns = [];
-
         $arrSqlColumns = $this->stockAndProductTableColumns;
-
-        //$cake = $this->objectClass::buildProduct($this->tableName, $arrData, $arrColumns);
 
         /* CALL STATIC VALIDATION ON THE OBJECT PRODUCT */
         $this->objectClass::validateModel($this->tableName, $this->stockAndProductTableColumns);
 
-        //     $cake->sayHello();
         $c = 0;
-        echo "
-            <table>
-                <thead>
-                    <tr>
-        ";
-        foreach ($arrSqlColumns as $header) {
 
-            echo "<th>$header</th>";
+        foreach ($arrSqlData as $arrObjectProperties) {
 
-        }
-        echo "
-                    </tr>
-                </thead>
-                <tbody>
-        ";
+            /* CREATE NEW INSTANCE OF MODEL AND HYDRATE */
+           $t = $this->objectClass::buildProduct($this->tableName, $arrObjectProperties, $arrSqlColumns);
 
-        foreach ($arrSqlData as $row) {
-
-            echo "<tr>";
-
-            foreach ($arrSqlColumns as $columnName) {
-
-                echo "<td> $row[$columnName] </td>";
-
-            }
+            echo $t->modelTest();
 
             $c++;
-
-            echo "</tr>";
-
-
         }
 
-        echo "
-                </tbody>
-            </table>
-        ";
+        echo $c;
 
-        echo "<br>THERE WERE $c <br> ";
+
+
+
+
+
+
+        //     $cake->sayHello();
+//        $c = 0;
+//        echo "
+//            <table>
+//                <thead>
+//                    <tr>
+//        ";
+//        foreach ($arrSqlColumns as $header) {
+//
+//            echo "<th>$header</th>";
+//
+//        }
+//        echo "
+//                    </tr>
+//                </thead>
+//                <tbody>
+//        ";
+//
+//        foreach ($arrSqlData as $row) {
+//
+//            echo "<tr>";
+//
+//            foreach ($arrSqlColumns as $columnName) {
+//
+//                echo "<td> $row[$columnName] </td>";
+//
+//            }
+//
+//            $c++;
+//
+//            echo "</tr>";
+//
+//
+//        }
+//
+//        echo "
+//                </tbody>
+//            </table>
+//        ";
+//
+//        echo "<br>THERE WERE $c <br> ";
 
         //    return $this->objectClass::buildProduct($this->tableName, $arrData, $arrColumns);
     }

@@ -25,9 +25,9 @@ class Repository extends AbstractRepository
     private $strSQLProductCategoryTypeColumnNames = '';
 
     private $arrMapperObject = [
-        'ObjectProduct' => 'ProductMapperObjectProduct',
-        'ObjectOrder' => 'ProductMapperObjectOrder',
-        'ObjectCustomer' => 'ProductMapperObjectCustomer',
+        'ObjectProduct' => 'MapperObjectProduct',
+        'ObjectOrder' => 'MapperObjectOrder',
+        'ObjectCustomer' => 'MapperObjectCustomer',
     ];
 
     private $sqlStatements = '';
