@@ -8,24 +8,61 @@
 
 class MapperObjectProduct extends AbstractMapper
 {
+    /**
+     * @var
+     */
     private $pdo;
 
+    /**
+     * @var
+     */
     private $objectClass;
 
+    /**
+     * @var
+     */
     private $tableName;
 
+    /**
+     * @var string
+     */
     private $primarySql = '';
 
+    /**
+     * @var
+     */
     private $stockAndProductTableColumns;
 
+    /**
+     * @var null
+     */
     protected $arguments;
 
+    /**
+     * @var
+     */
     private $queryType;
 
+    /**
+     * @var
+     */
     private $sqlData;
 
+    /**
+     * @var array
+     */
     private $arrReturnObjects = [];
 
+    /**
+     * MapperObjectProduct constructor.
+     * @param $pdo
+     * @param $objectClass
+     * @param $tableName
+     * @param $queryType
+     * @param $stockAndProductTable
+     * @param $primarySql
+     * @param null $arguments
+     */
     public function __construct($pdo, $objectClass, $tableName, $queryType, $stockAndProductTable, $primarySql, $arguments = null)
     {
         $this->pdo = $pdo;
@@ -41,64 +78,84 @@ class MapperObjectProduct extends AbstractMapper
         $this->primarySql = $primarySql;
 
         $this->arguments = $arguments;
-
-//        echo "PRODUCT MAPPER ONLINE";
-//
-//        echo gettype($this->primarySql);
-//
-//        echo $this->primarySql;
     }
 
+    /**
+     * @return array
+     */
     public function findByAllProductType()
     {
         $this->sqlData = $this->pdo->pdoConnection->query($this->primarySql);
 
-        $this->mapToModel();
+        return $this->mapToModel();
     }
 
+    /**
+     * @param $modelNumber
+     * @return array
+     */
     public function findByProductModelNumber($modelNumber)
     {
         $modelNumber = strtoupper($modelNumber);
 
         $this->sqlData = $this->pdo->pdoConnection->query($this->primarySql . "AND b.model_number = '$modelNumber'");
 
-        $this->mapToModel();
+        return $this->mapToModel();
     }
 
+    /**
+     * @param $productName
+     * @return array
+     */
     public function findByProductName($productName)
     {
         $this->sqlData = $this->pdo->pdoConnection->query($this->primarySql . "AND b.name LIKE '%$productName%'");
 
-        $this->mapToModel();
+        return $this->mapToModel();
     }
 
+    /**
+     * @param $companyName
+     * @return array
+     */
     public function findByProductCompany($companyName)
     {
         $companyName = ucfirst($companyName);
 
         $this->sqlData = $this->pdo->pdoConnection->query($this->primarySql . "AND b.company LIKE '%$companyName%'");
 
-        $this->mapToModel();
+        return $this->mapToModel();
     }
 
+    /**
+     * @param $supplierName
+     * @return array
+     */
     public function findBySupplierName($supplierName)
     {
         $supplierName = ucfirst($supplierName);
 
         $this->sqlData = $this->pdo->pdoConnection->query($this->primarySql . "AND a.supplier LIKE '%$supplierName%'");
 
-        $this->mapToModel();
+        return $this->mapToModel();
     }
 
+    /**
+     * @param $supplierNumber
+     * @return array
+     */
     public function findBySupplierNumber($supplierNumber)
     {
         $supplierNumber = strtoupper($supplierNumber);
 
         $this->sqlData = $this->pdo->pdoConnection->query($this->primarySql . "AND a.supplier_number = '$supplierNumber'");
 
-        $this->mapToModel();
+        return $this->mapToModel();
     }
 
+    /**
+     * @return array
+     */
     protected function mapToModel()
     {
         $arrSqlData = $this->sqlData->fetchAll();
@@ -108,69 +165,14 @@ class MapperObjectProduct extends AbstractMapper
         /* CALL STATIC VALIDATION ON THE OBJECT PRODUCT */
         $this->objectClass::validateModel($this->tableName, $this->stockAndProductTableColumns);
 
-        $c = 0;
+        //$productCounter = 0;
 
         foreach ($arrSqlData as $arrObjectProperties) {
 
             /* CREATE NEW INSTANCE OF MODEL AND HYDRATE */
-           $t = $this->objectClass::buildProduct($this->tableName, $arrObjectProperties, $arrSqlColumns);
-
-            echo $t->modelTest();
-
-            $c++;
+           $this->arrReturnObjects[] = $this->objectClass::buildProduct($this->tableName, $arrObjectProperties, $arrSqlColumns);
         }
-
-        echo $c;
-
-
-
-
-
-
-
-        //     $cake->sayHello();
-//        $c = 0;
-//        echo "
-//            <table>
-//                <thead>
-//                    <tr>
-//        ";
-//        foreach ($arrSqlColumns as $header) {
-//
-//            echo "<th>$header</th>";
-//
-//        }
-//        echo "
-//                    </tr>
-//                </thead>
-//                <tbody>
-//        ";
-//
-//        foreach ($arrSqlData as $row) {
-//
-//            echo "<tr>";
-//
-//            foreach ($arrSqlColumns as $columnName) {
-//
-//                echo "<td> $row[$columnName] </td>";
-//
-//            }
-//
-//            $c++;
-//
-//            echo "</tr>";
-//
-//
-//        }
-//
-//        echo "
-//                </tbody>
-//            </table>
-//        ";
-//
-//        echo "<br>THERE WERE $c <br> ";
-
-        //    return $this->objectClass::buildProduct($this->tableName, $arrData, $arrColumns);
+        return $this->arrReturnObjects;
     }
 
 }

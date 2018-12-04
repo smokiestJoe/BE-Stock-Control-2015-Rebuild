@@ -9,7 +9,7 @@
 function stockContent()
 {
     // REPO
-    $product = RepositoryFactory::build('product', 'memory')->read()->findByAllProductType();
+    $products = RepositoryFactory::build('product', 'memory')->read()->findByAllProductType();
 
 //
 //    $product = RepositoryFactory::build('product', 'memory')->read()->findByProductModelNumber('CMK16GX4M4A2400C14R');
@@ -26,44 +26,11 @@ function stockContent()
 //
 //    $product = RepositoryFactory::build('product', 'memory')->read()->findBySupplierNumber('COR-VS1GSDS333');
 
+    foreach ($products as $product) {
+        echo $product->modelTest();
+    }
 
 
-
-//
-   // $product->sayHello();
-//
-//
-// //  $customer = RepositoryFactory::build('customer')->read();
-//
-// //   $order = RepositoryFactory::build('order')->read();
-//
-//
-//    // OBJECT
-//  //  $product = RepositoryFactory::build('product', 'memory');
-//
-//
-//// MAPPER
-//// $productMapper = RepositoryFactory::build('product', 'memory');
-//
-////  $orderMapper = RepositoryFactory::build('order');
-//
-//    // $customerMapper = RepositoryFactory::build('customer');
-//
-//
-//     //   $order = RepositoryFactory::build('order');
-//
-//
-//
-//
-//
-//        // SHOW ME A MEMORY BY MODEL NUMBER
-//
-//        // SHOW ME ALL MEMORY
-//
-//        // SHOW ME ONLY DDR4 MEMORY
-//
-//        // SHOW ME ONLY DOMINATOR PLATINUM.
-
-
+//var_dump($products);
 
 }

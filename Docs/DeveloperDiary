@@ -136,8 +136,8 @@ PRE MODELS AND MAPPERS:
 
     When deleting? un-certain.
 
-    - While preparing the model collection, a inconsitency has arisen... Despite 25 records being displayed in the DB
-    and the manual query in the DB returing 25 results, only 24 are being retunred populated and one displayed blank.
+    - While preparing the model collection, a inconsistency has arisen... Despite 25 records being displayed in the DB
+    and the manual query in the DB returning 25 results, only 24 are being retunred populated and one displayed blank.
     If I LIMIT 1, I get 0, if I LIMIT 2, I get one etc... This will require further investigation.
 
 29.11.2018
@@ -173,6 +173,15 @@ PRE MODELS AND MAPPERS:
     (private->THORN->ParentClasses->Mapper->ObjectProductMapper)
     (private->THORN->ParentClasses->Model->ObjectProduct)
     (private->THORN->ChildClasses->ObjectProduct_Memory)
+
+04.12.2018
+    Mapper return either a collection of, or a singular product object. Before detangling continues, the next stage will
+    be to create product class for graphics cards and case fans. Ensure that other than the definition of the product
+    properties with the model need creating, no other coding is required. Once this is done, a layout and form will be
+    constructed to display the products as they would be 'for real', then the remaining mapping (create, insert, delete)
+    will be created. Once this is done, detamglement will be completed across the board (several weeks of coding) before
+    work will commence on the stock control supplier plugin commences.
+
 
 
 

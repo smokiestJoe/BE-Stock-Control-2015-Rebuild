@@ -32,7 +32,7 @@ class ObjectProductStatements extends AbstractStatements
         'create' => 'generateCreateSql',
         'read' => 'generateReadSql',
         'update' => 'generateUpdateSql',
-        'delete' => 'generateDeletSql',
+        'delete' => 'generateDeleteSql',
     ];
 
     public function __construct($command, $pdo, $tableName)
