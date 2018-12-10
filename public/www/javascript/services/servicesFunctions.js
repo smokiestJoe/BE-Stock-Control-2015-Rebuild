@@ -20,7 +20,7 @@ By: J.Rose
                 bindEvents();
             }
         };
-        xhttp.open("GET", "/../etg/public/ajaxXml/itSolutionSelection.php", true);
+        xhttp.open("GET", "/../new_project/public/ajaxXml/itSolutionSelection.php", true);
         xhttp.send();
     }
 
@@ -32,7 +32,7 @@ By: J.Rose
                 bindEvents();
             }
         };
-        xhttp.open("GET", "/../etg/public/ajaxXml/businessChangeManagement.php", true);
+        xhttp.open("GET", "/../new_project/public/ajaxXml/businessChangeManagement.php", true);
         xhttp.send();
     }
 
@@ -44,7 +44,7 @@ By: J.Rose
                 bindEvents();
             }
         };
-        xhttp.open("GET", "/../etg/public/ajaxXml/itTransformation.php", true);
+        xhttp.open("GET", "/../new_project/public/ajaxXml/itTransformation.php", true);
         xhttp.send();
     }
 
@@ -56,7 +56,7 @@ By: J.Rose
                 bindEvents();
             }
         };
-        xhttp.open("GET", "/../etg/public/ajaxXml/technicalDelivery.php", true);
+        xhttp.open("GET", "/../new_project/public/ajaxXml/technicalDelivery.php", true);
         xhttp.send();
     }
 
@@ -68,7 +68,7 @@ By: J.Rose
                 bindEvents();
             }
         };
-        xhttp.open("GET", "/../etg/public/ajaxXml/support.php", true);
+        xhttp.open("GET", "/../new_project/public/ajaxXml/support.php", true);
         xhttp.send();
     }
 

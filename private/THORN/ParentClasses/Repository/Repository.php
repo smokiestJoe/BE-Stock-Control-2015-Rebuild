@@ -20,6 +20,8 @@ class Repository extends AbstractRepository
 
     private $primarySql;
 
+    private $sqlStatements = '';
+
     private $arrProductCategoryTypeColumnNames = [];
 
     private $strSQLProductCategoryTypeColumnNames = '';
@@ -30,7 +32,6 @@ class Repository extends AbstractRepository
         'ObjectCustomer' => 'MapperObjectCustomer',
     ];
 
-    private $sqlStatements = '';
 
 
     public function __construct($class, $type = null)
@@ -139,9 +140,7 @@ class Repository extends AbstractRepository
 
     public function read($argument = null) // PASS IN THE WHERE CONDITION
     {
-        echo "CALL ONE: REPOSITORY READ <br><br>";
         $queryType = 'read';
-      //  $this->sqlStatements::generateReadSql($argument);
 
         $primarySql = new $this->sqlStatements($queryType, $this->pdo, $this->tableName);
 
@@ -149,43 +148,7 @@ class Repository extends AbstractRepository
 
         $columnsAndData = $primarySql->getColumnsAndData();
 
-       // echo  gettype($this->primarySql) . '<br>' .  $this->primarySql . '<br>';
-
         return $this->getMapper($queryType, $columnsAndData, $argument);
-
-        // IF NULL, QUERY (STRAIGHT SELECT)
-
-        // IF NOT NULL, PREPARE (2 ARGUMENTS ALLOWED)
-
-        // $this->initialiseObject();
-
-        /**
-         * GET ALL PRODUCTS / GET ALL ORDERS / GET ALL PRODUCTS
-         * GET ALL ORDERS - DATE / GET ALL PRODUCTS - DATE
-         * GET MODEL NUMBER / GET ORDER ID / GET CUSTOMER ID
-         * GET MODEL NAME / GET CUSTOMER NAME
-         */
-
-        /*
-         * Argument passed in can be a:
-         * Model Number /ID
-         * Date Range,
-         * Name
-         * Null = Nothing
-         */
-
-        // RERIEVE PRIMARY SQL ->
-
-        // RETRIVE ARGUMNETS
-
-        // RETRIAVE OBJECT CLASS
-
-        // PASS TO MAPPER
-
-        // PASS ARGUMENT TO MAPPER
-
-
-
     }
 
     public function update()

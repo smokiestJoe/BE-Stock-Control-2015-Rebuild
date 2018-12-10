@@ -61,7 +61,7 @@ class ObjectProduct_Memory extends ObjectProduct
      */
     private function hydrateModel()
     {
-        $this->productProperties = array_merge($this->productProperties_Product, $this->mergeParentArrays());
+        $this->productProperties = array_merge($this->mergeParentArrays(), $this->productProperties_Product);
 
         foreach ($this->sqlProductKeys as $key) {
 

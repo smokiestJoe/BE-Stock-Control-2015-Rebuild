@@ -182,7 +182,11 @@ PRE MODELS AND MAPPERS:
     will be created. Once this is done, detamglement will be completed across the board (several weeks of coding) before
     work will commence on the stock control supplier plugin commences.
 
-
+10.12.2018
+    In preparation for the VIEW section of the MVC, the STOCK page has been prepared with the necessary javascript and
+    jquery (modularised).
+        - (new_project->public->stockContent)
+        - (new_project->public->www->javacript->stockControl)
 
 
 

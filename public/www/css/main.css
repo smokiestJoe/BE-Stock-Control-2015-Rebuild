@@ -68,26 +68,7 @@ body {
     background-color: brown;
 }
 /*************************************************************/
-#it-solution-selection-services-link {
-    background-color: red;
-    min-height: 4em;
-}
-#business-change-management-services-link {
-    background-color: orange;
-    min-height: 4em;
-}
-#it-transformation-services-link {
-    background-color: yellow;
-    min-height: 4em;
-}
-#technical-delivery-services-link {
-    background-color: green;
-    min-height: 4em;
-}
-#support-services-link {
-    background-color: blue;
-    min-height: 4em;
-}
+
 
 /*************************************************************/
 .navTab {
@@ -153,4 +134,19 @@ footer {
     }
 
 }
-/**************************************************/
+/************************************/
+/************ STOCK PAGE ************/
+#stockSidebar {
+    background-color: #2aabd2;
+    height:100%;
+}
+
+#stockSidebar button {
+    width: 100%;
+}
+
+#stockContentWrapper {
+    min-height: 10px;
+    color: blue!important;
+    background-color: pink;
+}

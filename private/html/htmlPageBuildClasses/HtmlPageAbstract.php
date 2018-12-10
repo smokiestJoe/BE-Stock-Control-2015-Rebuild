@@ -40,7 +40,7 @@ abstract class HtmlPageAbstract
                 'link' => '/new_project/public/www/pages/stock.php'
             ],
             'content' => 'stockContent',
-            'usescript' => false,
+            'usescript' => true,
         ],
         'utilities' => [
             'name' => 'utilities',
@@ -51,7 +51,7 @@ abstract class HtmlPageAbstract
                 'link' => '/new_project/public/www/pages/utilities.php'
             ],
             'content' => 'utilitiesContent',
-            'usescript' => false,
+            'usescript' => true,
         ],
     ];
 
@@ -73,7 +73,7 @@ abstract class HtmlPageAbstract
         ],
         'css' => [
             'rel' => 'stylesheet',
-            'href' => '/etg/public/www/css/main.css',
+            'href' => '/new_project/public/www/css/main.css',
             'integrity' => 'na',
             'crossorigin' => 'na',
         ],
@@ -93,16 +93,24 @@ abstract class HtmlPageAbstract
             'crossorigin' => 'anonymous',
         ],
         'namespace' => [
-            'call' => ['utilities'],
-            'src' => '/etg/public/www/javascript/applicationNamespace.js',
+            'call' => ['utilities', 'stock'],
+            'src' => '/new_project/public/www/javascript/applicationNamespace.js',
+        ],
+        'stockControlFunctions' => [
+            'call' => ['stock'],
+            'src' => '/new_project/public/www/javascript/stockControl/stockControlFunctions.js',
+        ],
+        'stockControl' => [
+            'call' => ['stock'],
+            'src' => '/new_project/public/www/javascript/stockControl/stockControl.js',
         ],
         'servicesFunctions' => [
             'call' => ['utilities'],
-            'src' => '/etg/public/www/javascript/services/servicesFunctions.js',
+            'src' => '/new_project/public/www/javascript/services/servicesFunctions.js',
         ],
         'services' => [
             'call' => ['utilities'],
-            'src' => '/etg/public/www/javascript/services/services.js',
+            'src' => '/new_project/public/www/javascript/services/services.js',
         ],
     ];
 

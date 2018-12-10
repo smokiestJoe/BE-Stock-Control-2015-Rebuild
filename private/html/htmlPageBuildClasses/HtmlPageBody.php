@@ -64,7 +64,7 @@ class HtmlPageBody extends HtmlPageAbstract
 
                         <div class="spacer col-md-1"></div>
 
-                        <div id="htmlPageContentWrapperInner" class="col-md-10">
+                        <div id="htmlPageContentWrapperInner" class="col-md-12">
 
                             <div id="htmlPageSubCategoryLinkWrapper" class="col-md-12">
 
